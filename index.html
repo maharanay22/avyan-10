@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Avyan turns 10 — pool party, Sat Aug 1</title>
+<meta name="description" content="Avyan Rana Yadavalli turns 10. Pool party at Cumming Aquatic Center, Saturday August 1, 10:00 AM to 2:00 PM. RSVP by Tuesday July 28.">
+<meta name="theme-color" content="#052836">
+
+<!-- Open Graph: this is what renders as the preview card in iMessage / WhatsApp -->
+<meta property="og:title" content="Avyan turns 10 — pool party">
+<meta property="og:description" content="Sat Aug 1 · 10:00–2:00 · Cumming Aquatic Center. RSVP by Tue Jul 28.">
+<meta property="og:type" content="website">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Public+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   CONFIG NOTE: all Firebase / EmailJS keys live in the <script>
+   block at the bottom of this file. Nothing to change up here.
+   ============================================================ */
+
+:root{
+  --abyss:#052836;
+  --tile:#0C6E86;
+  --caustic:#4FE3E8;
+  --sun:#FFC048;
+  --foam:#F0FAFA;
+
+  --ink:var(--foam);
+  --muted:#8FB6C4;
+
+  --display:'Bricolage Grotesque', 'Avenir Next', 'Segoe UI', system-ui, sans-serif;
+  --body:'Public Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --mono:'DM Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  --gut:clamp(20px, 5vw, 48px);
+  --rule:1px solid rgba(79,227,232,.18);
+}
+
+*{box-sizing:border-box}
+html{
+  -webkit-text-size-adjust:100%;
+  background:#052836;
+  color-scheme:dark;
+}
+body{
+  margin:0;
+  background:#052836 !important;
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:17px;
+  line-height:1.55;
+  overflow-x:hidden;
+  overscroll-behavior-x:none;
+  -webkit-tap-highlight-color:rgba(79,227,232,.22);
+  -webkit-font-smoothing:antialiased;
+}
+/* iOS respects the safe area on notched phones in landscape */
+.wrap{
+  padding-left:max(var(--gut), env(safe-area-inset-left));
+  padding-right:max(var(--gut), env(safe-area-inset-right));
+}
+/* Belt and braces: a fixed layer behind the content. Some embedded
+   viewers force their own background onto <body>; this paints over it. */
+.backdrop{
+  position:fixed;
+  inset:0;
+  background:#052836;
+  z-index:-1;
+  pointer-events:none;
+}
+
+a{color:var(--caustic)}
+:focus-visible{outline:3px solid var(--sun); outline-offset:3px; border-radius:2px}
+
+.wrap{max-width:760px; margin:0 auto; padding-inline:var(--gut)}
+
+/* ---------- eyebrow / mono utility type ---------- */
+.eyebrow{
+  font-family:var(--mono);
+  font-size:12px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--caustic);
+  margin:0 0 10px;
+}
+
+/* ---------- HERO ---------- */
+.hero{
+  position:relative;
+  min-height:100vh;      /* fallback for iOS < 15.4 */
+  min-height:100svh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding-block:64px 40px;
+  overflow:hidden;
+}
+/* ambient caustic light — two slow-drifting radial washes, no canvas */
+.hero::before,
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:-30%;
+  background:
+    radial-gradient(38% 26% at 30% 20%, rgba(79,227,232,.20), transparent 60%),
+    radial-gradient(30% 22% at 74% 62%, rgba(12,110,134,.42), transparent 62%);
+  filter:blur(28px);
+  pointer-events:none;
+}
+.hero::after{opacity:.7}
+/* The drifting caustics are a large blurred surface. Composited on a
+   desktop GPU that's free; on a mid-range Android it janks the scroll
+   and eats battery. So: motion only where there's room for it. */
+@media (min-width:760px){
+  .hero::before,
+  .hero::after{
+    will-change:transform;
+    animation:drift 26s ease-in-out infinite alternate;
+  }
+  .hero::after{
+    animation-duration:38s;
+    animation-direction:alternate-reverse;
+  }
+}
+@keyframes drift{
+  from{transform:translate3d(-3%,-2%,0) scale(1)}
+  to{transform:translate3d(4%,3%,0) scale(1.12)}
+}
+.hero .wrap{position:relative; z-index:1}
+
+.numeral{width:100%; max-width:460px; height:auto; display:block; margin:0 0 4px -6px}
+
+h1{
+  font-family:var(--display);
+  font-weight:800;
+  font-size:clamp(30px, 8.2vw, 56px);
+  line-height:1.02;
+  letter-spacing:-.025em;
+  margin:0 0 14px;
+  text-wrap:balance;
+}
+h1 em{font-style:normal; color:var(--caustic)}
+
+.hero p.lede{
+  font-size:clamp(16px,4.2vw,19px);
+  color:var(--muted);
+  max-width:42ch;
+  margin:0 0 30px;
+}
+
+.actions{display:flex; flex-wrap:wrap; gap:12px}
+
+.btn{
+  font-family:var(--body);
+  font-weight:700;
+  font-size:16px;
+  padding:15px 24px;
+  border-radius:999px;
+  border:1px solid transparent;
+  cursor:pointer;
+  text-decoration:none;
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  transition:transform .16s ease, background .16s ease, color .16s ease;
+}
+.btn-primary{background:var(--sun); color:#2A1A00}
+.btn-primary:hover{transform:translateY(-2px)}
+.btn-ghost{background:transparent; color:var(--foam); border-color:rgba(240,250,250,.28)}
+.btn-ghost:hover{border-color:var(--caustic); color:var(--caustic)}
+
+/* ---------- LANES (the details) ---------- */
+/* Lane rows, because the venue is a 50m competition pool. The divider
+   is a lane rope: alternating floats, drawn in CSS. */
+.lanes{padding-block:clamp(48px,11vw,88px)}
+.lane{
+  display:grid;
+  grid-template-columns:76px 1fr;
+  gap:16px;
+  padding-block:26px;
+  align-items:start;
+}
+.lane + .lane{border-top:var(--rule)}
+.lane-no{
+  font-family:var(--mono);
+  font-size:12px;
+  letter-spacing:.14em;
+  color:var(--muted);
+  padding-top:5px;
+  text-transform:uppercase;
+}
+.lane h2{
+  font-family:var(--display);
+  font-weight:700;
+  font-size:clamp(21px,5.4vw,28px);
+  letter-spacing:-.015em;
+  margin:0 0 6px;
+  line-height:1.15;
+}
+.lane p{margin:0; color:var(--muted)}
+.lane p strong{color:var(--foam); font-weight:500}
+
+.rope{
+  height:14px;
+  margin-block:clamp(40px,9vw,64px);
+  background:repeating-linear-gradient(90deg,
+    var(--sun) 0 16px,
+    var(--caustic) 16px 32px);
+  border-radius:999px;
+  opacity:.5;
+}
+
+/* ---------- TWO COLUMNS ---------- */
+.cols{display:grid; gap:34px; grid-template-columns:1fr}
+@media(min-width:620px){.cols{grid-template-columns:1fr 1fr; gap:44px}}
+.col h3{
+  font-family:var(--mono);
+  font-size:12px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--sun);
+  margin:0 0 16px;
+  font-weight:500;
+}
+.col ul{list-style:none; margin:0; padding:0}
+.col li{
+  padding:11px 0 11px 26px;
+  border-bottom:var(--rule);
+  position:relative;
+  font-size:16px;
+}
+.col li::before{
+  content:"";
+  position:absolute;
+  left:2px; top:19px;
+  width:9px; height:9px;
+  border-radius:50%;
+  background:var(--caustic);
+  opacity:.55;
+}
+
+/* ---------- GATE CALLOUT ---------- */
+.gate{
+  margin-block:clamp(48px,11vw,80px);
+  padding:clamp(22px,5.5vw,32px);
+  border:1px solid var(--sun);
+  border-radius:16px;
+  background:rgba(255,192,72,.07);
+}
+.gate h3{
+  font-family:var(--display);
+  font-weight:700;
+  font-size:clamp(19px,4.8vw,23px);
+  margin:0 0 10px;
+  color:var(--sun);
+  letter-spacing:-.01em;
+}
+.gate p{margin:0; color:#DCEEF2; font-size:16px}
+
+/* ---------- RSVP ---------- */
+.rsvp{padding-bottom:clamp(56px,12vw,96px)}
+.rsvp h2{
+  font-family:var(--display);
+  font-weight:800;
+  font-size:clamp(28px,7.4vw,44px);
+  letter-spacing:-.025em;
+  margin:0 0 8px;
+}
+.deadline{
+  font-family:var(--mono);
+  font-size:13px;
+  color:var(--sun);
+  margin:0 0 28px;
+}
+.field{margin-bottom:18px}
+.field label{
+  display:block;
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:7px;
+}
+.field input,
+.field select,
+.field textarea{
+  width:100%;
+  font-family:var(--body);
+  font-size:16px; /* 16px stops iOS zoom-on-focus */
+  color:var(--foam);
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(79,227,232,.26);
+  border-radius:11px;
+  padding:14px 15px;
+  transition:border-color .15s ease, background .15s ease;
+}
+.field input:focus,
+.field select:focus,
+.field textarea:focus{
+  background:rgba(255,255,255,.09);
+  border-color:var(--caustic);
+}
+.field textarea{min-height:78px; resize:vertical}
+.field select{
+  -webkit-appearance:none;
+  appearance:none;
+  padding-right:44px;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234FE3E8' stroke-width='2.5' stroke-linecap='round'><path d='M6 9l6 6 6-6'/></svg>");
+  background-repeat:no-repeat;
+  background-position:right 14px center;
+  background-size:19px;
+}
+.hint{font-size:13px; color:var(--muted); margin:7px 0 0}
+.err{
+  font-size:13.5px;
+  color:#FFB0A2;
+  margin:7px 0 0;
+  display:none;
+}
+.field.invalid .err{display:block}
+.field.invalid input,
+.field.invalid select{border-color:#FF7A66}
+
+.formnote{
+  font-size:13.5px;
+  color:var(--muted);
+  margin:16px 0 0;
+  line-height:1.5;
+}
+
+/* ---------- SIGNATURE: the wristband ---------- */
+.pass{display:none}
+.pass.show{display:block; animation:passIn .5s cubic-bezier(.2,.8,.25,1) both}
+@keyframes passIn{
+  from{opacity:0; transform:translateY(14px) scale(.985)}
+  to{opacity:1; transform:none}
+}
+.band{
+  border-radius:14px;
+  overflow:hidden;
+  background:linear-gradient(102deg, var(--caustic), #7FF0D8 52%, var(--sun));
+  color:#04222E;
+  display:grid;
+  grid-template-columns:1fr;
+}
+@media(min-width:560px){.band{grid-template-columns:1fr 138px}}
+.band-main{padding:24px 24px 22px}
+.band-kicker{
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  margin:0 0 14px;
+  opacity:.72;
+}
+.band-name{
+  font-family:var(--display);
+  font-weight:800;
+  font-size:clamp(23px,6vw,32px);
+  letter-spacing:-.02em;
+  line-height:1.1;
+  margin:0 0 3px;
+  overflow-wrap:anywhere;
+}
+.band-sub{margin:0; font-size:15px; font-weight:500; overflow-wrap:anywhere}
+.band-meta{
+  font-family:var(--mono);
+  font-size:12px;
+  margin:16px 0 0;
+  opacity:.75;
+  letter-spacing:.04em;
+}
+/* perforated stub edge */
+.band-stub{
+  border-left:2px dashed rgba(4,34,46,.34);
+  padding:22px 16px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:5px;
+  text-align:center;
+}
+@media(max-width:559px){
+  .band-stub{border-left:0; border-top:2px dashed rgba(4,34,46,.34)}
+}
+.band-stub .n{
+  font-family:var(--display);
+  font-weight:800;
+  font-size:40px;
+  line-height:1;
+}
+.band-stub .l{
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  opacity:.72;
+}
+.pass p.after{margin:22px 0 0; color:var(--muted); font-size:15.5px}
+
+/* ---------- FOOTER ---------- */
+footer{
+  border-top:var(--rule);
+  padding-block:34px 46px;
+  font-size:13.5px;
+  color:var(--muted);
+}
+footer p{margin:0 0 7px}
+footer .built{font-family:var(--mono); font-size:12px; letter-spacing:.04em}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{
+    animation-duration:.001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="backdrop" aria-hidden="true"></div>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Sat 1 Aug · Cumming Aquatic Center</p>
+
+    <!-- Signature 1: the numeral is filled with actual water -->
+    <svg class="numeral" viewBox="0 0 300 150" role="img" aria-label="Ten">
+      <defs>
+        <clipPath id="cut">
+          <text x="0" y="128" font-family="Bricolage Grotesque, Avenir Next, system-ui, sans-serif"
+                font-weight="800" font-size="168" letter-spacing="-8">10</text>
+        </clipPath>
+        <linearGradient id="wg" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#4FE3E8"/>
+          <stop offset="1" stop-color="#0C6E86"/>
+        </linearGradient>
+      </defs>
+      <g clip-path="url(#cut)">
+        <rect x="0" y="40" width="300" height="120" fill="url(#wg)"/>
+        <path fill="#4FE3E8" opacity=".55"
+              d="M0 42 q25 -10 50 0 t50 0 t50 0 t50 0 t50 0 t50 0 v120 H0Z">
+          <animateTransform attributeName="transform" type="translate"
+                            values="-100 0; 0 0" dur="4.5s" repeatCount="indefinite"/>
+        </path>
+        <path fill="#EAF7F8" opacity=".28"
+              d="M0 47 q25 8 50 0 t50 0 t50 0 t50 0 t50 0 t50 0 v120 H0Z">
+          <animateTransform attributeName="transform" type="translate"
+                            values="0 0; -100 0" dur="7s" repeatCount="indefinite"/>
+        </path>
+      </g>
+      <text x="0" y="128" font-family="Bricolage Grotesque, Avenir Next, system-ui, sans-serif"
+            font-weight="800" font-size="168" letter-spacing="-8"
+            fill="none" stroke="#4FE3E8" stroke-width="2" opacity=".45">10</text>
+    </svg>
+
+    <h1>Avyan Rana Yadavalli hits <em>double digits</em>.</h1>
+    <p class="lede">Lazy river, a 150-foot slide, lunch and cake. Bring your kid, bring your swimsuit, we'll cover the rest.</p>
+
+    <div class="actions">
+      <a class="btn btn-primary" href="#rsvp">RSVP</a>
+      <button class="btn btn-ghost" id="ics" type="button">Add to calendar</button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ LANES ============ -->
+<section class="lanes">
+  <div class="wrap">
+
+    <div class="lane">
+      <div class="lane-no">When</div>
+      <div>
+        <h2>Saturday, August 1</h2>
+        <p><strong>10:00 AM – 2:00 PM.</strong> Come at 10 if you can — the slide line is short in the first hour.</p>
+      </div>
+    </div>
+
+    <div class="lane">
+      <div class="lane-no">Where</div>
+      <div>
+        <h2>Cumming Aquatic Center</h2>
+        <p><strong>201 Aquatic Circle, Cumming, GA 30040.</strong> Check in at the Outdoor Leisure Pool ticket booth and say you're with the Yadavalli party — then look for our cabana.</p>
+      </div>
+    </div>
+
+    <div class="lane">
+      <div class="lane-no">Who</div>
+      <div>
+        <h2>Your child, plus one parent</h2>
+        <p>A parent needs to stay for the whole party — <strong>this isn't a drop-off</strong>. Pool rules require an adult in a swimsuit poolside for swimmers aged 8 to 13, so pack yours too.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="wrap"><div class="rope" aria-hidden="true"></div></div>
+
+<!-- ============ COVERED / BRING ============ -->
+<section>
+  <div class="wrap cols">
+    <div class="col">
+      <h3>We've got</h3>
+      <ul>
+        <li>Admission for your child <em>and</em> for you</li>
+        <li>Lunch at the cabana</li>
+        <li>Cake, obviously</li>
+        <li>Shade and a place to park your bag</li>
+      </ul>
+    </div>
+    <div class="col">
+      <h3>You bring</h3>
+      <ul>
+        <li>Swimsuit — kid and parent</li>
+        <li>Towel each</li>
+        <li>Sunscreen</li>
+        <li>A dry change of clothes</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GATE RULE ============ -->
+<div class="wrap">
+  <div class="gate">
+    <h3>Your names have to be on the list</h3>
+    <p>The Aquatic Center gates entry by a guest list we submit in advance, and they won't admit anyone who isn't on it. That's why the form below asks for full names rather than just a headcount. One more thing worth knowing before Saturday: riders must be 48 inches tall for the big slide, no exceptions.</p>
+  </div>
+</div>
+
+<!-- ============ RSVP ============ -->
+<section class="rsvp" id="rsvp">
+  <div class="wrap">
+    <h2>RSVP</h2>
+    <p class="deadline" id="deadline">Closes Tuesday, July 28</p>
+
+    <form id="form" novalidate>
+      <div class="field" id="f-child">
+        <label for="child">Child's full name</label>
+        <input id="child" name="child" type="text" autocomplete="off" placeholder="First and last">
+        <p class="err">We need the full name exactly as the Aquatic Center will see it.</p>
+      </div>
+
+      <div class="field" id="f-parent">
+        <label for="parent">Escorting parent's full name</label>
+        <input id="parent" name="parent" type="text" autocomplete="name" placeholder="First and last">
+        <p class="err">Add the adult who'll be staying — they need to be on the list too.</p>
+      </div>
+
+      <div class="field" id="f-attending">
+        <label for="attending">Can you make it?</label>
+        <select id="attending" name="attending">
+          <option value="">Pick one</option>
+          <option value="yes">Yes, we'll be there</option>
+          <option value="no">Sorry, we can't</option>
+        </select>
+        <p class="err">Let us know either way so we can close the list.</p>
+      </div>
+
+      <div class="field">
+        <label for="contact">Mobile or email</label>
+        <input id="contact" name="contact" type="text" inputmode="tel" autocomplete="tel" placeholder="So we can reach you Saturday">
+        <p class="hint">A number is easiest — email works too.</p>
+      </div>
+
+      <div class="field">
+        <label for="notes">Allergies or anything we should know</label>
+        <textarea id="notes" name="notes" placeholder="Optional"></textarea>
+      </div>
+
+      <button class="btn btn-primary" type="submit" id="submit">Send my RSVP</button>
+      <p class="formnote" id="formnote">Goes straight to Maha. Nothing is shared with anyone else.</p>
+    </form>
+
+    <!-- Signature 2: the confirmation prints an admission wristband -->
+    <div class="pass" id="pass" aria-live="polite">
+      <div class="band">
+        <div class="band-main">
+          <p class="band-kicker">Guest list · Cumming Aquatic Center</p>
+          <p class="band-name" id="pass-child">—</p>
+          <p class="band-sub" id="pass-parent">—</p>
+          <p class="band-meta" id="pass-meta">—</p>
+        </div>
+        <div class="band-stub">
+          <span class="l">Aug</span>
+          <span class="n">01</span>
+          <span class="l">10–2</span>
+        </div>
+      </div>
+      <p class="after" id="pass-after">You're on the list. Nothing to print — just show up and check in at the ticket booth.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p id="count">—</p>
+    <p>Questions? Text Maha.</p>
+    <p class="built">Built by Maha · <a href="https://maharanay22.github.io">maharanay22.github.io</a></p>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   1. CONFIG — fill these three things in, then deploy.
+   ============================================================ */
+const CONFIG = {
+  // Firebase → Project settings → General → Project ID
+  projectId: "YOUR_FIREBASE_PROJECT_ID",
+  // Firebase → Project settings → Web API Key
+  apiKey: "YOUR_FIREBASE_WEB_API_KEY",
+  // Firestore collection. Lock it write-only in your rules (see README).
+  collection: "rsvps",
+
+  // Optional: leave emailjs.enabled false and you simply won't get
+  // a notification email — RSVPs still land in Firestore either way.
+  emailjs: {
+    enabled: false,
+    publicKey: "YOUR_EMAILJS_PUBLIC_KEY",
+    serviceId: "YOUR_EMAILJS_SERVICE_ID",
+    templateId: "YOUR_EMAILJS_TEMPLATE_ID"
+  },
+
+  rsvpDeadline: "2026-07-28T23:59:00-04:00",
+  partyStart:   "2026-08-01T10:00:00-04:00",
+  partyEnd:     "2026-08-01T14:00:00-04:00"
+};
+
+const configured = !CONFIG.projectId.startsWith("YOUR_");
+
+/* ============================================================
+   2. Countdown to the RSVP deadline
+   ============================================================ */
+const countEl = document.getElementById("count");
+function tick(){
+  const ms = new Date(CONFIG.rsvpDeadline) - Date.now();
+  if (ms <= 0){
+    countEl.textContent = "RSVPs are closed. Text Maha if you still want to come.";
+    return;
+  }
+  const d = Math.floor(ms / 864e5);
+  const h = Math.floor(ms % 864e5 / 36e5);
+  countEl.textContent = d > 0
+    ? `${d} day${d===1?"":"s"} and ${h} hour${h===1?"":"s"} left to RSVP.`
+    : `${h} hour${h===1?"":"s"} left to RSVP.`;
+}
+tick();
+setInterval(tick, 60000);
+
+/* ============================================================
+   3. Add to calendar — .ics generated in the browser, no service
+   ============================================================ */
+function stamp(iso){
+  return new Date(iso).toISOString().replace(/[-:]/g,"").split(".")[0] + "Z";
+}
+document.getElementById("ics").addEventListener("click", () => {
+  const ics = [
+    "BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//avyan-10//EN","BEGIN:VEVENT",
+    "UID:" + Date.now() + "@avyan10",
+    "DTSTAMP:" + stamp(new Date().toISOString()),
+    "DTSTART:" + stamp(CONFIG.partyStart),
+    "DTEND:"   + stamp(CONFIG.partyEnd),
+    "SUMMARY:Avyan's 10th birthday pool party",
+    "LOCATION:Cumming Aquatic Center\\, 201 Aquatic Circle\\, Cumming\\, GA 30040",
+    "DESCRIPTION:Bring a swimsuit for your child and yourself\\, towels and sunscreen. Check in at the Outdoor Leisure Pool ticket booth.",
+    "END:VEVENT","END:VCALENDAR"
+  ].join("\r\n");
+  const url = URL.createObjectURL(new Blob([ics], {type:"text/calendar"}));
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "avyan-birthday.ics";
+  a.click();
+  URL.revokeObjectURL(url);
+});
+
+/* ============================================================
+   4. RSVP submit → Firestore REST API (no SDK, no bundle)
+   ============================================================ */
+const form   = document.getElementById("form");
+const btn    = document.getElementById("submit");
+const note   = document.getElementById("formnote");
+
+function setInvalid(id, bad){
+  document.getElementById(id).classList.toggle("invalid", bad);
+}
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const data = {
+    child:     document.getElementById("child").value.trim(),
+    parent:    document.getElementById("parent").value.trim(),
+    attending: document.getElementById("attending").value,
+    contact:   document.getElementById("contact").value.trim(),
+    notes:     document.getElementById("notes").value.trim()
+  };
+
+  // Two words minimum on names — a bare first name is useless at the gate.
+  const nameOk = v => v.split(/\s+/).filter(Boolean).length >= 2;
+  const bad = {
+    "f-child":     !nameOk(data.child),
+    "f-parent":    !nameOk(data.parent),
+    "f-attending": !data.attending
+  };
+  Object.entries(bad).forEach(([id, v]) => setInvalid(id, v));
+  if (Object.values(bad).some(Boolean)){
+    document.querySelector(".field.invalid input, .field.invalid select").focus();
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = "Sending…";
+
+  const serial = "CAC-" + Date.now().toString(36).toUpperCase().slice(-6);
+
+  try{
+    if (configured){
+      const url = `https://firestore.googleapis.com/v1/projects/${CONFIG.projectId}`
+                + `/databases/(default)/documents/${CONFIG.collection}?key=${CONFIG.apiKey}`;
+      const res = await fetch(url, {
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body: JSON.stringify({ fields:{
+          child:     {stringValue:data.child},
+          parent:    {stringValue:data.parent},
+          attending: {stringValue:data.attending},
+          contact:   {stringValue:data.contact},
+          notes:     {stringValue:data.notes},
+          serial:    {stringValue:serial},
+          receivedAt:{timestampValue:new Date().toISOString()}
+        }})
+      });
+      if (!res.ok) throw new Error("Firestore " + res.status);
+
+      if (CONFIG.emailjs.enabled && window.emailjs){
+        emailjs.send(CONFIG.emailjs.serviceId, CONFIG.emailjs.templateId, {
+          child:data.child, parent:data.parent, attending:data.attending,
+          contact:data.contact, notes:data.notes, serial:serial
+        }).catch(()=>{}); // notification is nice-to-have, never blocks the guest
+      }
+    }
+
+    // Print the wristband
+    document.getElementById("pass-child").textContent  = data.child;
+    document.getElementById("pass-parent").textContent = "with " + data.parent;
+    document.getElementById("pass-meta").textContent   = serial + " · admits 2";
+
+    if (data.attending === "no"){
+      document.querySelector(".band").style.filter = "grayscale(.85)";
+      document.getElementById("pass-after").textContent =
+        "Got it — we'll miss you. We've taken you off the list.";
+    }
+
+    form.style.display = "none";
+    document.getElementById("pass").classList.add("show");
+    document.getElementById("pass").scrollIntoView({behavior:"smooth", block:"center"});
+
+  }catch(err){
+    btn.disabled = false;
+    btn.textContent = "Send my RSVP";
+    note.style.color = "#FFB0A2";
+    note.textContent = "That didn't go through. Try once more, or just text Maha your names — either works.";
+    console.error(err);
+  }
+});
+</script>
+
+<script>
+/* EmailJS loads only if you switched it on. Off by default, so the page
+   ships zero third-party requests and guests on cellular get it instantly. */
+if (CONFIG.emailjs.enabled){
+  const s = document.createElement("script");
+  s.src = "https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js";
+  s.async = true;
+  s.onload = () => emailjs.init({publicKey: CONFIG.emailjs.publicKey});
+  document.head.appendChild(s);
+}
+</script>
+
+</body>
+</html>
