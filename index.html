@@ -326,6 +326,35 @@ h1 em{font-style:normal; color:var(--caustic)}
 .field.invalid input,
 .field.invalid select{border-color:#FF7A66}
 
+.kidrow{display:flex; gap:9px; align-items:center; margin-bottom:9px}
+.kidrow input{flex:1; min-width:0}
+.kidrow .rm{
+  flex:0 0 auto;
+  width:44px; height:44px;
+  border-radius:11px;
+  border:1px solid rgba(79,227,232,.26);
+  background:transparent;
+  color:var(--muted);
+  font-size:20px;
+  line-height:1;
+  cursor:pointer;
+}
+.kidrow .rm:hover{border-color:#FF7A66; color:#FF7A66}
+.addkid{
+  background:transparent;
+  border:1px dashed rgba(79,227,232,.4);
+  color:var(--caustic);
+  font-family:var(--body);
+  font-size:14.5px;
+  font-weight:500;
+  padding:11px 16px;
+  border-radius:11px;
+  cursor:pointer;
+  margin-top:2px;
+}
+.addkid:hover{border-style:solid}
+.addkid[hidden]{display:none}
+
 .formnote{
   font-size:13.5px;
   color:var(--muted);
@@ -495,8 +524,8 @@ footer .built{font-family:var(--mono); font-size:12px; letter-spacing:.04em}
     <div class="lane">
       <div class="lane-no">Who</div>
       <div>
-        <h2>Your child, plus one parent</h2>
-        <p>A parent needs to stay for the whole party — <strong>this isn't a drop-off</strong>. Pool rules require an adult in a swimsuit poolside for swimmers aged 8 to 13, so pack yours too.</p>
+        <h2>Your kids, plus one parent</h2>
+        <p>Bringing a brother or sister is fine — just add each of their names on the RSVP so they're on the gate list. A parent needs to stay for the whole party; <strong>this isn't a drop-off</strong>. Pool rules put an adult in a swimsuit poolside for ages 8 to 13, and <strong>in the water</strong> for anyone 7 or under, so plan accordingly if you're bringing a little one.</p>
       </div>
     </div>
 
@@ -545,9 +574,15 @@ footer .built{font-family:var(--mono); font-size:12px; letter-spacing:.04em}
 
     <form id="form" novalidate>
       <div class="field" id="f-child">
-        <label for="child">Child's full name</label>
-        <input id="child" name="child" type="text" autocomplete="off" placeholder="First and last">
-        <p class="err">We need the full name exactly as the Aquatic Center will see it.</p>
+        <label for="child">Children's full names</label>
+        <div id="kids">
+          <div class="kidrow">
+            <input id="child" name="child" type="text" autocomplete="off" placeholder="First and last">
+          </div>
+        </div>
+        <button type="button" class="addkid" id="addkid">+ Add another child</button>
+        <p class="hint" id="kidhint">Add a brother or sister here if they're coming. Up to 3 children.</p>
+        <p class="err">Every child needs a first and last name — that's what the Aquatic Center checks at the gate.</p>
       </div>
 
       <div class="field" id="f-parent">
@@ -630,6 +665,13 @@ const CONFIG = {
     templateId: "YOUR_EMAILJS_TEMPLATE_ID"
   },
 
+  // Siblings. maxKids caps how many children one family can add.
+  // coverSiblings decides what the form tells them about paying.
+  //   true  = you're covering every child they bring
+  //   false = you cover the invited child; siblings pay at the booth
+  maxKids: 3,
+  coverSiblings: true,
+
   rsvpDeadline: "2026-07-28T23:59:00-04:00",
   partyStart:   "2026-08-01T10:00:00-04:00",
   partyEnd:     "2026-08-01T14:00:00-04:00"
@@ -683,7 +725,52 @@ document.getElementById("ics").addEventListener("click", () => {
 });
 
 /* ============================================================
-   4. RSVP submit → Firestore REST API (no SDK, no bundle)
+   4. Children — add and remove rows, capped at CONFIG.maxKids
+   ============================================================ */
+const kids    = document.getElementById("kids");
+const addkid  = document.getElementById("addkid");
+const kidhint = document.getElementById("kidhint");
+
+kidhint.textContent = CONFIG.coverSiblings
+  ? `Add a brother or sister here if they're coming — admission is covered for them too. Up to ${CONFIG.maxKids} children.`
+  : `Add a brother or sister here if they're coming. Siblings pay their own admission at the booth. Up to ${CONFIG.maxKids} children.`;
+
+function kidInputs(){ return [...kids.querySelectorAll("input")]; }
+
+function syncKids(){
+  const rows = [...kids.querySelectorAll(".kidrow")];
+  rows.forEach((row, i) => {
+    let rm = row.querySelector(".rm");
+    if (i === 0){ if (rm) rm.remove(); return; }
+    if (!rm){
+      rm = document.createElement("button");
+      rm.type = "button";
+      rm.className = "rm";
+      rm.setAttribute("aria-label", "Remove this child");
+      rm.textContent = "×";
+      rm.addEventListener("click", () => { row.remove(); syncKids(); });
+      row.appendChild(rm);
+    }
+  });
+  addkid.hidden = rows.length >= CONFIG.maxKids;
+}
+
+addkid.addEventListener("click", () => {
+  const row = document.createElement("div");
+  row.className = "kidrow";
+  const input = document.createElement("input");
+  input.type = "text";
+  input.autocomplete = "off";
+  input.placeholder = "First and last";
+  row.appendChild(input);
+  kids.appendChild(row);
+  syncKids();
+  input.focus();
+});
+syncKids();
+
+/* ============================================================
+   5. RSVP submit → Firestore REST API (no SDK, no bundle)
    ============================================================ */
 const form   = document.getElementById("form");
 const btn    = document.getElementById("submit");
@@ -696,8 +783,10 @@ function setInvalid(id, bad){
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
+  const children = kidInputs().map(i => i.value.trim()).filter(Boolean);
+
   const data = {
-    child:     document.getElementById("child").value.trim(),
+    children,
     parent:    document.getElementById("parent").value.trim(),
     attending: document.getElementById("attending").value,
     contact:   document.getElementById("contact").value.trim(),
@@ -707,7 +796,7 @@ form.addEventListener("submit", async (e) => {
   // Two words minimum on names — a bare first name is useless at the gate.
   const nameOk = v => v.split(/\s+/).filter(Boolean).length >= 2;
   const bad = {
-    "f-child":     !nameOk(data.child),
+    "f-child":     children.length === 0 || !children.every(nameOk),
     "f-parent":    !nameOk(data.parent),
     "f-attending": !data.attending
   };
@@ -730,7 +819,8 @@ form.addEventListener("submit", async (e) => {
         method:"POST",
         headers:{"Content-Type":"application/json"},
         body: JSON.stringify({ fields:{
-          child:     {stringValue:data.child},
+          children:  {arrayValue:{values: data.children.map(n => ({stringValue:n}))}},
+          childCount:{integerValue: String(data.children.length)},
           parent:    {stringValue:data.parent},
           attending: {stringValue:data.attending},
           contact:   {stringValue:data.contact},
@@ -743,16 +833,17 @@ form.addEventListener("submit", async (e) => {
 
       if (CONFIG.emailjs.enabled && window.emailjs){
         emailjs.send(CONFIG.emailjs.serviceId, CONFIG.emailjs.templateId, {
-          child:data.child, parent:data.parent, attending:data.attending,
+          child:data.children.join(", "), parent:data.parent, attending:data.attending,
           contact:data.contact, notes:data.notes, serial:serial
         }).catch(()=>{}); // notification is nice-to-have, never blocks the guest
       }
     }
 
     // Print the wristband
-    document.getElementById("pass-child").textContent  = data.child;
+    document.getElementById("pass-child").textContent  = data.children.join(" · ");
     document.getElementById("pass-parent").textContent = "with " + data.parent;
-    document.getElementById("pass-meta").textContent   = serial + " · admits 2";
+    document.getElementById("pass-meta").textContent   =
+      serial + " · admits " + (data.children.length + 1);
 
     if (data.attending === "no"){
       document.querySelector(".band").style.filter = "grayscale(.85)";
