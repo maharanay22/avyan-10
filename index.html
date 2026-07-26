@@ -996,7 +996,7 @@ form.addEventListener("submit", async (e) => {
 
       // Mail is fire-and-forget on purpose. A bad EmailJS key must never
       // cost you a guest whose RSVP already saved.
-      if (CONFIG.emailjs.enabled && window.emailjs){
+      if (CONFIG.emailjs.enabled){
         const vars = {
           to_email:   data.email,
           parent:     data.parent,
