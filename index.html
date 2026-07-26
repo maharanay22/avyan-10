@@ -176,7 +176,7 @@ h1 em{font-style:normal; color:var(--caustic)}
 /* ---------- LANES (the details) ---------- */
 /* Lane rows, because the venue is a 50m competition pool. The divider
    is a lane rope: alternating floats, drawn in CSS. */
-.lanes{padding-block:clamp(48px,11vw,88px)}
+.lanes{padding-block:clamp(52px,12vw,86px)}
 .lane{
   display:grid;
   grid-template-columns:76px 1fr;
@@ -204,15 +204,6 @@ h1 em{font-style:normal; color:var(--caustic)}
 .lane p{margin:0; color:var(--muted)}
 .lane p strong{color:var(--foam); font-weight:500}
 
-.rope{
-  height:14px;
-  margin-block:clamp(40px,9vw,64px);
-  background:repeating-linear-gradient(90deg,
-    var(--sun) 0 16px,
-    var(--caustic) 16px 32px);
-  border-radius:999px;
-  opacity:.5;
-}
 
 /* ---------- TWO COLUMNS ---------- */
 .cols{display:grid; gap:34px; grid-template-columns:1fr}
@@ -443,6 +434,96 @@ footer{
 footer p{margin:0 0 7px}
 footer .built{font-family:var(--mono); font-size:12px; letter-spacing:.04em}
 
+/* ---------- COLOUR BANDS ----------
+   Each band re-scopes the ink/muted/rule variables, so the same
+   components render correctly on light and dark ground. The scalloped
+   top edge is pool coping, drawn with one repeating gradient. */
+.band{
+  position:relative;
+  color:var(--ink);
+  background:var(--bandbg);
+  padding-block:clamp(52px,12vw,86px);
+  margin-top:26px;
+}
+.band::before{
+  content:"";
+  position:absolute;
+  left:0; right:0; top:-21px;
+  height:22px;
+  background-image:radial-gradient(circle at 50% 100%, var(--bandbg) 0 68%, transparent 69%);
+  background-size:46px 22px;
+  background-repeat:repeat-x;
+}
+.band-deck{
+  --bandbg:#FFF3DE;
+  --ink:#0A3446;
+  --muted:#57798A;
+  --accent:#E0562F;
+  --rule:1px solid rgba(10,52,70,.15);
+}
+.band-tile{
+  --bandbg:#5FD9DC;
+  --ink:#04303F;
+  --muted:#0B5568;
+  --accent:#0A4A5C;
+  --rule:1px solid rgba(4,48,63,.2);
+}
+.band-deep{
+  --bandbg:#052836;
+  --ink:#F0FAFA;
+  --muted:#8FB6C4;
+  --accent:#FFC048;
+  --rule:1px solid rgba(79,227,232,.18);
+}
+.band-sun{
+  --bandbg:#FFC94A;
+  --ink:#3A2400;
+  --muted:#6B4A08;
+  --accent:#8A3B00;
+  --rule:1px solid rgba(58,36,0,.2);
+}
+.band .lane p strong{color:var(--ink)}
+.band .col h3{color:var(--accent)}
+/* bullets become pool rings rather than filled dots */
+.band .col li::before{
+  background:transparent;
+  border:2.5px solid currentColor;
+  width:11px; height:11px;
+  top:18px;
+  opacity:.42;
+}
+/* inside the yellow band the callout box is redundant */
+.band-sun .gate{
+  margin:0;
+  padding:0;
+  border:0;
+  background:transparent;
+}
+.band-sun .gate h3{color:var(--ink); font-size:clamp(22px,5.6vw,30px)}
+.band-sun .gate p{color:var(--muted)}
+
+/* ---------- MOTION ----------
+   One orchestrated moment: the numeral fills. Everything else is a
+   quiet reveal on scroll. No confetti, no parallax, no canvas. */
+.numeral .fill{
+  transform-box:view-box;
+  transform-origin:0 0;
+  animation:rise 1.9s cubic-bezier(.22,.85,.28,1) .3s both;
+}
+@keyframes rise{
+  from{transform:translateY(118px)}
+  to{transform:translateY(0)}
+}
+
+/* Elements only hide once JS has marked them, so a JS failure
+   can never leave the page blank. */
+.reveal{opacity:0; transform:translateY(16px)}
+.reveal.in{
+  opacity:1;
+  transform:none;
+  transition:opacity .6s ease, transform .6s cubic-bezier(.2,.8,.3,1);
+}
+
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{
     animation-duration:.001ms !important;
@@ -474,7 +555,8 @@ footer .built{font-family:var(--mono); font-size:12px; letter-spacing:.04em}
         </linearGradient>
       </defs>
       <g clip-path="url(#cut)">
-        <rect x="0" y="40" width="300" height="120" fill="url(#wg)"/>
+       <g class="fill">
+        <rect x="0" y="40" width="300" height="140" fill="url(#wg)"/>
         <path fill="#4FE3E8" opacity=".55"
               d="M0 42 q25 -10 50 0 t50 0 t50 0 t50 0 t50 0 t50 0 v120 H0Z">
           <animateTransform attributeName="transform" type="translate"
@@ -485,6 +567,7 @@ footer .built{font-family:var(--mono); font-size:12px; letter-spacing:.04em}
           <animateTransform attributeName="transform" type="translate"
                             values="0 0; -100 0" dur="7s" repeatCount="indefinite"/>
         </path>
+       </g>
       </g>
       <text x="0" y="128" font-family="Bricolage Grotesque, Avenir Next, system-ui, sans-serif"
             font-weight="800" font-size="168" letter-spacing="-8"
@@ -502,7 +585,7 @@ footer .built{font-family:var(--mono); font-size:12px; letter-spacing:.04em}
 </header>
 
 <!-- ============ LANES ============ -->
-<section class="lanes">
+<section class="lanes band band-deck">
   <div class="wrap">
 
     <div class="lane">
@@ -532,10 +615,8 @@ footer .built{font-family:var(--mono); font-size:12px; letter-spacing:.04em}
   </div>
 </section>
 
-<div class="wrap"><div class="rope" aria-hidden="true"></div></div>
-
 <!-- ============ COVERED / BRING ============ -->
-<section>
+<section class="band band-tile">
   <div class="wrap cols">
     <div class="col">
       <h3>We've got</h3>
@@ -559,15 +640,17 @@ footer .built{font-family:var(--mono); font-size:12px; letter-spacing:.04em}
 </section>
 
 <!-- ============ GATE RULE ============ -->
+<section class="band band-sun">
 <div class="wrap">
   <div class="gate">
     <h3>Your names have to be on the list</h3>
     <p>The Aquatic Center gates entry by a guest list we submit in advance, and they won't admit anyone who isn't on it. That's why the form below asks for full names rather than just a headcount. One more thing worth knowing before Saturday: riders must be 48 inches tall for the big slide, no exceptions.</p>
   </div>
 </div>
+</section>
 
 <!-- ============ RSVP ============ -->
-<section class="rsvp" id="rsvp">
+<section class="rsvp band band-deep" id="rsvp">
   <div class="wrap">
     <h2>RSVP</h2>
     <p class="deadline" id="deadline">Closes Tuesday, July 28</p>
@@ -601,10 +684,18 @@ footer .built{font-family:var(--mono); font-size:12px; letter-spacing:.04em}
         <p class="err">Let us know either way so we can close the list.</p>
       </div>
 
+      <div class="field" id="f-email">
+        <label for="email">Your email</label>
+        <input id="email" name="email" type="email" inputmode="email" autocomplete="email"
+               autocapitalize="off" spellcheck="false" placeholder="you@example.com">
+        <p class="hint" id="emailhint">So we can reach you about Saturday.</p>
+        <p class="err">That doesn't look like a working email — check it and try again.</p>
+      </div>
+
       <div class="field">
-        <label for="contact">Mobile or email</label>
-        <input id="contact" name="contact" type="text" inputmode="tel" autocomplete="tel" placeholder="So we can reach you Saturday">
-        <p class="hint">A number is easiest — email works too.</p>
+        <label for="phone">Mobile number</label>
+        <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel"
+               placeholder="Optional — in case we need you on Saturday">
       </div>
 
       <div class="field">
@@ -613,7 +704,7 @@ footer .built{font-family:var(--mono); font-size:12px; letter-spacing:.04em}
       </div>
 
       <button class="btn btn-primary" type="submit" id="submit">Send my RSVP</button>
-      <p class="formnote" id="formnote">Goes straight to Maha. Nothing is shared with anyone else.</p>
+      <p class="formnote" id="formnote">Your names go to Rana and onto the Aquatic Center's entry list for Saturday. Nowhere else.</p>
     </form>
 
     <!-- Signature 2: the confirmation prints an admission wristband -->
@@ -631,7 +722,7 @@ footer .built{font-family:var(--mono); font-size:12px; letter-spacing:.04em}
           <span class="l">10–2</span>
         </div>
       </div>
-      <p class="after" id="pass-after">You're on the list. Nothing to print — just show up and check in at the ticket booth.</p>
+      <p class="after" id="pass-after">You're on the list.</p>
     </div>
   </div>
 </section>
@@ -639,8 +730,8 @@ footer .built{font-family:var(--mono); font-size:12px; letter-spacing:.04em}
 <footer>
   <div class="wrap">
     <p id="count">—</p>
-    <p>Questions? Text Maha.</p>
-    <p class="built">Built by Maha · <a href="https://maharanay22.github.io">maharanay22.github.io</a></p>
+    <p>Questions? Text Rana.</p>
+    <p class="built">Built by Rana · <a href="https://maharanay22.github.io">maharanay22.github.io</a></p>
   </div>
 </footer>
 
@@ -656,13 +747,18 @@ const CONFIG = {
   // Firestore collection. Lock it write-only in your rules (see README).
   collection: "rsvps",
 
-  // Optional: leave emailjs.enabled false and you simply won't get
-  // a notification email — RSVPs still land in Firestore either way.
+  // EmailJS sends two messages per RSVP:
+  //   confirmTemplateId → goes to the parent who filled the form
+  //   notifyTemplateId  → goes to you
+  // Leave enabled false and RSVPs still save to Firestore — you just
+  // won't get mail. Email never blocks the save.
   emailjs: {
     enabled: false,
     publicKey: "YOUR_EMAILJS_PUBLIC_KEY",
     serviceId: "YOUR_EMAILJS_SERVICE_ID",
-    templateId: "YOUR_EMAILJS_TEMPLATE_ID"
+    confirmTemplateId: "YOUR_CONFIRM_TEMPLATE_ID",
+    notifyTemplateId: "YOUR_NOTIFY_TEMPLATE_ID",
+    notifyTo: "you@example.com"
   },
 
   // Siblings. maxKids caps how many children one family can add.
@@ -686,7 +782,7 @@ const countEl = document.getElementById("count");
 function tick(){
   const ms = new Date(CONFIG.rsvpDeadline) - Date.now();
   if (ms <= 0){
-    countEl.textContent = "RSVPs are closed. Text Maha if you still want to come.";
+    countEl.textContent = "RSVPs are closed. Text Rana if you still want to come.";
     return;
   }
   const d = Math.floor(ms / 864e5);
@@ -730,6 +826,13 @@ document.getElementById("ics").addEventListener("click", () => {
 const kids    = document.getElementById("kids");
 const addkid  = document.getElementById("addkid");
 const kidhint = document.getElementById("kidhint");
+
+/* Copy follows the config. If EmailJS is off, the page must not
+   promise an email that will never arrive. */
+const willEmail = CONFIG.emailjs.enabled;
+document.getElementById("emailhint").textContent = willEmail
+  ? "We'll email you a confirmation with the address and times."
+  : "So we can reach you about Saturday.";
 
 kidhint.textContent = CONFIG.coverSiblings
   ? `Add a brother or sister here if they're coming — admission is covered for them too. Up to ${CONFIG.maxKids} children.`
@@ -789,16 +892,19 @@ form.addEventListener("submit", async (e) => {
     children,
     parent:    document.getElementById("parent").value.trim(),
     attending: document.getElementById("attending").value,
-    contact:   document.getElementById("contact").value.trim(),
+    email:     document.getElementById("email").value.trim(),
+    phone:     document.getElementById("phone").value.trim(),
     notes:     document.getElementById("notes").value.trim()
   };
 
   // Two words minimum on names — a bare first name is useless at the gate.
-  const nameOk = v => v.split(/\s+/).filter(Boolean).length >= 2;
+  const nameOk  = v => v.split(/\s+/).filter(Boolean).length >= 2;
+  const emailOk = v => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
   const bad = {
     "f-child":     children.length === 0 || !children.every(nameOk),
     "f-parent":    !nameOk(data.parent),
-    "f-attending": !data.attending
+    "f-attending": !data.attending,
+    "f-email":     !emailOk(data.email)
   };
   Object.entries(bad).forEach(([id, v]) => setInvalid(id, v));
   if (Object.values(bad).some(Boolean)){
@@ -823,7 +929,8 @@ form.addEventListener("submit", async (e) => {
           childCount:{integerValue: String(data.children.length)},
           parent:    {stringValue:data.parent},
           attending: {stringValue:data.attending},
-          contact:   {stringValue:data.contact},
+          email:     {stringValue:data.email},
+          phone:     {stringValue:data.phone},
           notes:     {stringValue:data.notes},
           serial:    {stringValue:serial},
           receivedAt:{timestampValue:new Date().toISOString()}
@@ -831,15 +938,35 @@ form.addEventListener("submit", async (e) => {
       });
       if (!res.ok) throw new Error("Firestore " + res.status);
 
+      // Mail is fire-and-forget on purpose. A bad EmailJS key must never
+      // cost you a guest whose RSVP already saved.
       if (CONFIG.emailjs.enabled && window.emailjs){
-        emailjs.send(CONFIG.emailjs.serviceId, CONFIG.emailjs.templateId, {
-          child:data.children.join(", "), parent:data.parent, attending:data.attending,
-          contact:data.contact, notes:data.notes, serial:serial
-        }).catch(()=>{}); // notification is nice-to-have, never blocks the guest
+        const vars = {
+          to_email:   data.email,
+          parent:     data.parent,
+          children:   data.children.join(", "),
+          child_count:data.children.length,
+          attending:  data.attending === "yes" ? "Yes" : "No",
+          phone:      data.phone || "not given",
+          notes:      data.notes || "none",
+          serial:     serial,
+          admits:     data.children.length + 1,
+          host_email: CONFIG.emailjs.notifyTo
+        };
+        const send = (tpl, extra) =>
+          emailjs.send(CONFIG.emailjs.serviceId, tpl, {...vars, ...extra}).catch(()=>{});
+
+        // Only confirm to people who are actually coming.
+        if (data.attending === "yes") send(CONFIG.emailjs.confirmTemplateId);
+        send(CONFIG.emailjs.notifyTemplateId, {to_email: CONFIG.emailjs.notifyTo});
       }
     }
 
     // Print the wristband
+    document.getElementById("pass-after").textContent = willEmail
+      ? "You're on the list. A confirmation is on its way to your inbox — nothing to print, just check in at the ticket booth."
+      : "You're on the list. Nothing to print — just check in at the ticket booth on Saturday.";
+
     document.getElementById("pass-child").textContent  = data.children.join(" · ");
     document.getElementById("pass-parent").textContent = "with " + data.parent;
     document.getElementById("pass-meta").textContent   =
@@ -859,10 +986,23 @@ form.addEventListener("submit", async (e) => {
     btn.disabled = false;
     btn.textContent = "Send my RSVP";
     note.style.color = "#FFB0A2";
-    note.textContent = "That didn't go through. Try once more, or just text Maha your names — either works.";
+    note.textContent = "That didn't go through. Try once more, or just text Rana your names — either works.";
     console.error(err);
   }
 });
+/* ============================================================
+   6. Scroll reveal — 12 lines, no library, opt-out on request
+   ============================================================ */
+if (!matchMedia("(prefers-reduced-motion: reduce)").matches && "IntersectionObserver" in window){
+  const targets = document.querySelectorAll(".lane, .col, .gate, .rsvp h2, .rsvp form");
+  targets.forEach(el => el.classList.add("reveal"));
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); }
+    });
+  }, {rootMargin:"0px 0px -12% 0px", threshold:.15});
+  targets.forEach(el => io.observe(el));
+}
 </script>
 
 <script>
