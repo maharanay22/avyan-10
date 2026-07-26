@@ -3,775 +3,662 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Avyan turns 10 — pool party, Sat Aug 1</title>
+<title>Avyan turns 10 — legendary pool party</title>
 <meta name="description" content="Avyan Rana Yadavalli turns 10. Pool party at Cumming Aquatic Center, Saturday August 1, 10:00 AM to 2:00 PM. RSVP by Tuesday July 28.">
-<meta name="theme-color" content="#052836">
+<meta name="theme-color" content="#031d2f">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23031d2f'/><text x='16' y='23' text-anchor='middle' font-size='20' fill='%23ffc72c'>10</text></svg>">
 
-<!-- Open Graph: this is what renders as the preview card in iMessage / WhatsApp -->
-<meta property="og:title" content="Avyan turns 10 — pool party">
-<meta property="og:description" content="Sat Aug 1 · 10:00–2:00 · Cumming Aquatic Center. RSVP by Tue Jul 28.">
+<meta property="og:title" content="Avyan turns 10 — legendary pool party">
+<meta property="og:description" content="Sat Aug 1 · 10:00 AM–2:00 PM · Cumming Aquatic Center. RSVP by Tue Jul 28.">
 <meta property="og:type" content="website">
+<meta property="og:image" content="assets/avyan-birthday-invitation.jpg">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Public+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=DM+Mono:wght@400;500&family=Press+Start+2P&family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-/* ============================================================
-   CONFIG NOTE: all Firebase / EmailJS keys live in the <script>
-   block at the bottom of this file. Nothing to change up here.
-   ============================================================ */
-
 :root{
-  --abyss:#052836;
-  --tile:#0C6E86;
-  --caustic:#4FE3E8;
-  --sun:#FFC048;
-  --foam:#F0FAFA;
-
-  --ink:var(--foam);
-  --muted:#8FB6C4;
-
-  --display:'Bricolage Grotesque', 'Avenir Next', 'Segoe UI', system-ui, sans-serif;
-  --body:'Public Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-  --mono:'DM Mono', ui-monospace, 'SF Mono', Menlo, monospace;
-
-  --gut:clamp(20px, 5vw, 48px);
-  --rule:1px solid rgba(79,227,232,.18);
+  --navy:#031d2f;
+  --navy-2:#062b40;
+  --navy-3:#0a3a50;
+  --cyan:#35dce5;
+  --cyan-soft:#9af7fb;
+  --yellow:#ffc72c;
+  --yellow-2:#ffe36d;
+  --purple:#6e2bb8;
+  --green:#7bd13f;
+  --red:#ff4a5e;
+  --white:#f7feff;
+  --muted:#a8c9d4;
+  --line:rgba(113,226,235,.22);
+  --display:'Bricolage Grotesque','Segoe UI',system-ui,sans-serif;
+  --body:'Public Sans','Segoe UI',system-ui,sans-serif;
+  --pixel:'Press Start 2P','DM Mono',monospace;
+  --mono:'DM Mono',ui-monospace,monospace;
 }
 
 *{box-sizing:border-box}
-html{
-  -webkit-text-size-adjust:100%;
-  background:#052836;
-  color-scheme:dark;
-}
+html{scroll-behavior:smooth;background:var(--navy);color-scheme:dark}
 body{
   margin:0;
-  background:#052836 !important;
-  color:var(--ink);
-  font-family:var(--body);
-  font-size:17px;
-  line-height:1.55;
+  min-width:320px;
   overflow-x:hidden;
-  overscroll-behavior-x:none;
-  -webkit-tap-highlight-color:rgba(79,227,232,.22);
+  background:
+    radial-gradient(circle at 9% 9%, rgba(53,220,229,.10), transparent 28rem),
+    radial-gradient(circle at 88% 35%, rgba(110,43,184,.11), transparent 30rem),
+    var(--navy);
+  color:var(--white);
+  font-family:var(--body);
+  line-height:1.55;
   -webkit-font-smoothing:antialiased;
+  -webkit-tap-highlight-color:rgba(255,199,44,.25);
 }
-/* iOS respects the safe area on notched phones in landscape */
-.wrap{
-  padding-left:max(var(--gut), env(safe-area-inset-left));
-  padding-right:max(var(--gut), env(safe-area-inset-right));
-}
-/* Belt and braces: a fixed layer behind the content. Some embedded
-   viewers force their own background onto <body>; this paints over it. */
-.backdrop{
+body::before{
+  content:"";
   position:fixed;
   inset:0;
-  background:#052836;
-  z-index:-1;
   pointer-events:none;
+  opacity:.15;
+  background-image:
+    linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px),
+    linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px);
+  background-size:32px 32px;
+  z-index:-1;
+}
+a{color:inherit}
+button,input,select,textarea{font:inherit}
+button{color:inherit}
+:focus-visible{outline:4px solid var(--yellow);outline-offset:4px}
+
+.sr-only{
+  position:absolute!important;
+  width:1px!important;
+  height:1px!important;
+  padding:0!important;
+  margin:-1px!important;
+  overflow:hidden!important;
+  clip:rect(0,0,0,0)!important;
+  white-space:nowrap!important;
+  border:0!important;
 }
 
-a{color:var(--caustic)}
-:focus-visible{outline:3px solid var(--sun); outline-offset:3px; border-radius:2px}
-
-.wrap{max-width:760px; margin:0 auto; padding-inline:var(--gut)}
-
-/* ---------- eyebrow / mono utility type ---------- */
-.eyebrow{
-  font-family:var(--mono);
-  font-size:12px;
-  letter-spacing:.16em;
-  text-transform:uppercase;
-  color:var(--caustic);
-  margin:0 0 10px;
+/* The uploaded invitation is the hero itself, so the page matches it exactly. */
+.poster-stage{
+  padding:0 max(0px, env(safe-area-inset-right)) 0 max(0px, env(safe-area-inset-left));
 }
-
-/* ---------- HERO ---------- */
-.hero{
+.poster-shell{
   position:relative;
-  min-height:100vh;      /* fallback for iOS < 15.4 */
-  min-height:100svh;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  padding-block:64px 40px;
-  overflow:hidden;
+  width:min(100%, 760px);
+  margin:0 auto;
+  background:#021827;
+  box-shadow:0 22px 70px rgba(0,0,0,.48);
+  isolation:isolate;
 }
-/* ambient caustic light — two slow-drifting radial washes, no canvas */
-.hero::before,
-.hero::after{
+.poster-shell img{
+  display:block;
+  width:100%;
+  height:auto;
+  user-select:none;
+  -webkit-user-drag:none;
+}
+.poster-action{
+  position:absolute;
+  z-index:5;
+  display:block;
+  border:0;
+  padding:0;
+  margin:0;
+  background:transparent;
+  cursor:pointer;
+  border-radius:999px;
+  color:transparent;
+  text-decoration:none;
+  -webkit-tap-highlight-color:rgba(255,255,255,.18);
+}
+.poster-action:hover{box-shadow:0 0 0 4px rgba(255,255,255,.12) inset}
+.poster-action:focus-visible{
+  outline:4px solid #fff;
+  outline-offset:3px;
+  box-shadow:0 0 0 7px rgba(53,220,229,.55);
+}
+/* Hotspots line up with the two buttons already drawn into the supplied image. */
+.poster-rsvp{left:6.1%;top:90.35%;width:23.4%;height:6.65%}
+.poster-calendar{left:31.1%;top:90.35%;width:40.4%;height:6.65%}
+
+.scroll-cue{
+  width:min(100% - 32px, 760px);
+  margin:0 auto;
+  padding:18px 18px 20px;
+  text-align:center;
+  font-family:var(--pixel);
+  font-size:clamp(8px,2.35vw,11px);
+  line-height:1.7;
+  letter-spacing:.03em;
+  color:var(--cyan-soft);
+}
+.scroll-cue a{text-decoration:none}
+.scroll-cue a:hover{color:var(--yellow)}
+
+.content{
+  width:min(100% - 34px, 760px);
+  margin:0 auto;
+}
+.section{
+  padding:clamp(42px,9vw,72px) 0;
+  border-top:1px solid var(--line);
+}
+.section-kicker{
+  margin:0 0 12px;
+  font-family:var(--pixel);
+  font-size:clamp(9px,2.5vw,12px);
+  line-height:1.7;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  color:var(--yellow);
+}
+.section-title{
+  margin:0 0 24px;
+  font-family:var(--display);
+  font-size:clamp(32px,8vw,52px);
+  line-height:1;
+  letter-spacing:-.035em;
+}
+.section-title em{font-style:normal;color:var(--cyan)}
+
+.detail-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:14px;
+}
+.detail-card{
+  position:relative;
+  overflow:hidden;
+  padding:22px;
+  border:1px solid var(--line);
+  border-radius:20px;
+  background:linear-gradient(145deg, rgba(10,58,80,.92), rgba(4,34,51,.95));
+  box-shadow:0 15px 35px rgba(0,0,0,.20);
+}
+.detail-card::after{
   content:"";
   position:absolute;
-  inset:-30%;
-  background:
-    radial-gradient(38% 26% at 30% 20%, rgba(79,227,232,.20), transparent 60%),
-    radial-gradient(30% 22% at 74% 62%, rgba(12,110,134,.42), transparent 62%);
-  filter:blur(28px);
-  pointer-events:none;
+  right:-28px;
+  top:-28px;
+  width:86px;
+  height:86px;
+  border-radius:18px;
+  border:12px solid rgba(53,220,229,.06);
+  transform:rotate(22deg);
 }
-.hero::after{opacity:.7}
-/* The drifting caustics are a large blurred surface. Composited on a
-   desktop GPU that's free; on a mid-range Android it janks the scroll
-   and eats battery. So: motion only where there's room for it. */
-@media (min-width:760px){
-  .hero::before,
-  .hero::after{
-    will-change:transform;
-    animation:drift 26s ease-in-out infinite alternate;
-  }
-  .hero::after{
-    animation-duration:38s;
-    animation-direction:alternate-reverse;
-  }
+.detail-label{
+  margin:0 0 8px;
+  font-family:var(--pixel);
+  font-size:9px;
+  line-height:1.65;
+  color:var(--cyan);
+  text-transform:uppercase;
 }
-@keyframes drift{
-  from{transform:translate3d(-3%,-2%,0) scale(1)}
-  to{transform:translate3d(4%,3%,0) scale(1.12)}
-}
-.hero .wrap{position:relative; z-index:1}
-
-.numeral{width:100%; max-width:460px; height:auto; display:block; margin:0 0 4px -6px}
-
-h1{
+.detail-card h2{
+  margin:0 0 8px;
   font-family:var(--display);
-  font-weight:800;
-  font-size:clamp(30px, 8.2vw, 56px);
-  line-height:1.02;
-  letter-spacing:-.025em;
-  margin:0 0 14px;
-  text-wrap:balance;
+  font-size:clamp(23px,5vw,30px);
+  line-height:1.1;
 }
-h1 em{font-style:normal; color:var(--caustic)}
+.detail-card p{margin:0;color:var(--muted)}
+.detail-card strong{color:var(--white)}
 
-.hero p.lede{
-  font-size:clamp(16px,4.2vw,19px);
-  color:var(--muted);
-  max-width:42ch;
-  margin:0 0 30px;
-}
-
-.actions{display:flex; flex-wrap:wrap; gap:12px}
-
-.btn{
-  font-family:var(--body);
-  font-weight:700;
-  font-size:16px;
-  padding:15px 24px;
-  border-radius:999px;
-  border:1px solid transparent;
-  cursor:pointer;
-  text-decoration:none;
+.maplink{
   display:inline-flex;
   align-items:center;
   gap:9px;
-  transition:transform .16s ease, background .16s ease, color .16s ease;
+  margin-top:16px;
+  padding:12px 17px;
+  border:1px solid rgba(53,220,229,.52);
+  border-radius:999px;
+  color:var(--cyan-soft);
+  text-decoration:none;
+  font-weight:800;
 }
-.btn-primary{background:var(--sun); color:#2A1A00}
-.btn-primary:hover{transform:translateY(-2px)}
-.btn-ghost{background:transparent; color:var(--foam); border-color:rgba(240,250,250,.28)}
-.btn-ghost:hover{border-color:var(--caustic); color:var(--caustic)}
+.maplink:hover{background:rgba(53,220,229,.10)}
+.maplink svg{width:18px;height:18px}
 
-/* ---------- LANES (the details) ---------- */
-/* Lane rows, because the venue is a 50m competition pool. The divider
-   is a lane rope: alternating floats, drawn in CSS. */
-.lanes{padding-block:clamp(52px,12vw,86px)}
-.lane{
+.cols{
   display:grid;
-  grid-template-columns:76px 1fr;
+  grid-template-columns:1fr;
   gap:16px;
-  padding-block:26px;
-  align-items:start;
 }
-.lane + .lane{border-top:var(--rule)}
-.lane-no{
-  font-family:var(--mono);
-  font-size:12px;
-  letter-spacing:.14em;
-  color:var(--muted);
-  padding-top:5px;
-  text-transform:uppercase;
+.col{
+  padding:22px;
+  border-radius:20px;
+  border:1px solid var(--line);
+  background:rgba(4,35,52,.76);
 }
-.lane h2{
-  font-family:var(--display);
-  font-weight:700;
-  font-size:clamp(21px,5.4vw,28px);
-  letter-spacing:-.015em;
-  margin:0 0 6px;
-  line-height:1.15;
-}
-.lane p{margin:0; color:var(--muted)}
-.lane p strong{color:var(--foam); font-weight:500}
-
-
-/* ---------- TWO COLUMNS ---------- */
-.cols{display:grid; gap:34px; grid-template-columns:1fr}
-@media(min-width:620px){.cols{grid-template-columns:1fr 1fr; gap:44px}}
 .col h3{
-  font-family:var(--mono);
-  font-size:12px;
-  letter-spacing:.16em;
+  margin:0 0 12px;
+  color:var(--yellow);
+  font-family:var(--pixel);
+  font-size:10px;
+  line-height:1.7;
   text-transform:uppercase;
-  color:var(--sun);
-  margin:0 0 16px;
-  font-weight:500;
 }
-.col ul{list-style:none; margin:0; padding:0}
+.col ul{list-style:none;margin:0;padding:0}
 .col li{
-  padding:11px 0 11px 26px;
-  border-bottom:var(--rule);
   position:relative;
-  font-size:16px;
+  padding:12px 0 12px 28px;
+  border-bottom:1px solid rgba(113,226,235,.12);
 }
+.col li:last-child{border-bottom:0}
 .col li::before{
   content:"";
   position:absolute;
-  left:2px; top:19px;
-  width:9px; height:9px;
-  border-radius:50%;
-  background:var(--caustic);
-  opacity:.55;
+  left:1px;
+  top:19px;
+  width:11px;
+  height:11px;
+  background:var(--green);
+  box-shadow:4px 4px 0 rgba(0,0,0,.30);
 }
 
-/* ---------- GATE CALLOUT ---------- */
 .gate{
-  margin-block:clamp(48px,11vw,80px);
-  padding:clamp(22px,5.5vw,32px);
-  border:1px solid var(--sun);
-  border-radius:16px;
-  background:rgba(255,192,72,.07);
+  position:relative;
+  overflow:hidden;
+  padding:clamp(24px,5vw,34px);
+  border:2px solid var(--yellow);
+  border-radius:22px;
+  background:linear-gradient(135deg, rgba(255,199,44,.13), rgba(110,43,184,.10));
+}
+.gate::before{
+  content:"!";
+  position:absolute;
+  right:18px;
+  top:-20px;
+  font-family:var(--pixel);
+  font-size:112px;
+  color:rgba(255,199,44,.08);
 }
 .gate h3{
-  font-family:var(--display);
-  font-weight:700;
-  font-size:clamp(19px,4.8vw,23px);
+  position:relative;
   margin:0 0 10px;
-  color:var(--sun);
-  letter-spacing:-.01em;
-}
-.gate p{margin:0; color:#DCEEF2; font-size:16px}
-
-/* ---------- RSVP ---------- */
-.rsvp{padding-bottom:clamp(56px,12vw,96px)}
-.rsvp h2{
   font-family:var(--display);
-  font-weight:800;
-  font-size:clamp(28px,7.4vw,44px);
-  letter-spacing:-.025em;
-  margin:0 0 8px;
+  font-size:clamp(25px,6vw,36px);
+  line-height:1.05;
+  color:var(--yellow-2);
+}
+.gate p{position:relative;margin:0;color:#d8edf3}
+
+.rsvp-wrap{
+  padding:clamp(28px,6vw,44px);
+  border:1px solid rgba(53,220,229,.32);
+  border-radius:26px;
+  background:
+    linear-gradient(160deg, rgba(9,56,77,.96), rgba(3,28,43,.98));
+  box-shadow:0 24px 60px rgba(0,0,0,.30);
+}
+.rsvp h2{
+  margin:0 0 7px;
+  font-family:var(--display);
+  font-size:clamp(36px,9vw,58px);
+  line-height:1;
 }
 .deadline{
-  font-family:var(--mono);
-  font-size:13px;
-  color:var(--sun);
-  margin:0 0 28px;
+  margin:0 0 27px;
+  color:var(--yellow);
+  font-family:var(--pixel);
+  font-size:9px;
+  line-height:1.8;
 }
-.field{margin-bottom:18px}
+.field{margin-bottom:19px}
 .field label{
   display:block;
-  font-family:var(--mono);
-  font-size:11px;
-  letter-spacing:.14em;
+  margin-bottom:8px;
+  font-family:var(--pixel);
+  font-size:8.5px;
+  line-height:1.75;
   text-transform:uppercase;
-  color:var(--muted);
-  margin-bottom:7px;
+  color:var(--cyan-soft);
 }
 .field input,
 .field select,
 .field textarea{
   width:100%;
-  font-family:var(--body);
-  font-size:16px; /* 16px stops iOS zoom-on-focus */
-  color:var(--foam);
-  background:rgba(255,255,255,.05);
-  border:1px solid rgba(79,227,232,.26);
-  border-radius:11px;
+  border:1px solid rgba(113,226,235,.28);
+  border-radius:13px;
   padding:14px 15px;
-  transition:border-color .15s ease, background .15s ease;
+  background:rgba(255,255,255,.055);
+  color:var(--white);
+  font-size:16px;
+  outline:0;
+  transition:border-color .15s ease, background .15s ease, box-shadow .15s ease;
 }
-.field input:focus,
-.field select:focus,
-.field textarea:focus{
-  background:rgba(255,255,255,.09);
-  border-color:var(--caustic);
+.field input::placeholder,.field textarea::placeholder{color:#7ba1ae}
+.field input:focus,.field select:focus,.field textarea:focus{
+  border-color:var(--cyan);
+  background:rgba(255,255,255,.085);
+  box-shadow:0 0 0 3px rgba(53,220,229,.12);
 }
-.field textarea{min-height:78px; resize:vertical}
 .field select{
-  -webkit-appearance:none;
   appearance:none;
   padding-right:44px;
-  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234FE3E8' stroke-width='2.5' stroke-linecap='round'><path d='M6 9l6 6 6-6'/></svg>");
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2335dce5' stroke-width='2.5' stroke-linecap='round'><path d='M6 9l6 6 6-6'/></svg>");
   background-repeat:no-repeat;
   background-position:right 14px center;
-  background-size:19px;
+  background-size:18px;
 }
-.hint{font-size:13px; color:var(--muted); margin:7px 0 0}
-.err{
-  font-size:13.5px;
-  color:#FFB0A2;
-  margin:7px 0 0;
-  display:none;
-}
+.field select option{background:#082d40;color:#fff}
+.field textarea{min-height:90px;resize:vertical}
+.hint,.err,.formnote{font-size:13px;line-height:1.55}
+.hint{margin:7px 0 0;color:var(--muted)}
+.err{display:none;margin:7px 0 0;color:#ffb1a6}
 .field.invalid .err{display:block}
-.field.invalid input,
-.field.invalid select{border-color:#FF7A66}
+.field.invalid input,.field.invalid select{border-color:#ff705f}
 
-.kidrow{display:flex; gap:9px; align-items:center; margin-bottom:9px}
-.kidrow input{flex:1; min-width:0}
+.kidrow{display:flex;align-items:center;gap:9px;margin-bottom:9px}
+.kidrow input{flex:1;min-width:0}
 .kidrow .rm{
-  flex:0 0 auto;
-  width:44px; height:44px;
-  border-radius:11px;
-  border:1px solid rgba(79,227,232,.26);
+  flex:0 0 45px;
+  height:45px;
+  border:1px solid rgba(113,226,235,.28);
+  border-radius:12px;
   background:transparent;
   color:var(--muted);
-  font-size:20px;
-  line-height:1;
   cursor:pointer;
+  font-size:22px;
 }
-.kidrow .rm:hover{border-color:#FF7A66; color:#FF7A66}
+.kidrow .rm:hover{border-color:#ff705f;color:#ff9b8f}
 .addkid{
-  background:transparent;
-  border:1px dashed rgba(79,227,232,.4);
-  color:var(--caustic);
-  font-family:var(--body);
-  font-size:14.5px;
-  font-weight:500;
-  padding:11px 16px;
-  border-radius:11px;
-  cursor:pointer;
   margin-top:2px;
+  padding:11px 14px;
+  border:1px dashed rgba(53,220,229,.5);
+  border-radius:12px;
+  background:transparent;
+  color:var(--cyan);
+  cursor:pointer;
+  font-weight:800;
 }
-.addkid:hover{border-style:solid}
+.addkid:hover{border-style:solid;background:rgba(53,220,229,.08)}
 .addkid[hidden]{display:none}
+.formnote{margin:15px 0 0;color:var(--muted)}
 
-.formnote{
-  font-size:13.5px;
-  color:var(--muted);
-  margin:16px 0 0;
-  line-height:1.5;
-}
-
-/* ---------- SIGNATURE: the wristband ---------- */
-.pass{display:none}
-.pass.show{display:block; animation:passIn .5s cubic-bezier(.2,.8,.25,1) both}
-@keyframes passIn{
-  from{opacity:0; transform:translateY(14px) scale(.985)}
-  to{opacity:1; transform:none}
-}
-.band{
-  border-radius:14px;
-  overflow:hidden;
-  background:linear-gradient(102deg, var(--caustic), #7FF0D8 52%, var(--sun));
-  color:#04222E;
-  display:grid;
-  grid-template-columns:1fr;
-}
-@media(min-width:560px){.band{grid-template-columns:1fr 138px}}
-.band-main{padding:24px 24px 22px}
-.band-kicker{
-  font-family:var(--mono);
-  font-size:11px;
-  letter-spacing:.18em;
-  text-transform:uppercase;
-  margin:0 0 14px;
-  opacity:.72;
-}
-.band-name{
-  font-family:var(--display);
-  font-weight:800;
-  font-size:clamp(23px,6vw,32px);
-  letter-spacing:-.02em;
-  line-height:1.1;
-  margin:0 0 3px;
-  overflow-wrap:anywhere;
-}
-.band-sub{margin:0; font-size:15px; font-weight:500; overflow-wrap:anywhere}
-.band-meta{
-  font-family:var(--mono);
-  font-size:12px;
-  margin:16px 0 0;
-  opacity:.75;
-  letter-spacing:.04em;
-}
-/* perforated stub edge */
-.band-stub{
-  border-left:2px dashed rgba(4,34,46,.34);
-  padding:22px 16px;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  gap:5px;
-  text-align:center;
-}
-@media(max-width:559px){
-  .band-stub{border-left:0; border-top:2px dashed rgba(4,34,46,.34)}
-}
-.band-stub .n{
-  font-family:var(--display);
-  font-weight:800;
-  font-size:40px;
-  line-height:1;
-}
-.band-stub .l{
-  font-family:var(--mono);
-  font-size:10px;
-  letter-spacing:.16em;
-  text-transform:uppercase;
-  opacity:.72;
-}
-.pass p.after{margin:22px 0 0; color:var(--muted); font-size:15.5px}
-
-/* ---------- FOOTER ---------- */
-footer{
-  border-top:var(--rule);
-  padding-block:34px 46px;
-  font-size:13.5px;
-  color:var(--muted);
-}
-footer p{margin:0 0 7px}
-footer .built{font-family:var(--mono); font-size:12px; letter-spacing:.04em}
-
-/* ---------- COLOUR BANDS ----------
-   Each band re-scopes the ink/muted/rule variables, so the same
-   components render correctly on light and dark ground. The scalloped
-   top edge is pool coping, drawn with one repeating gradient. */
-.band{
-  position:relative;
-  color:var(--ink);
-  background:var(--bandbg);
-  padding-block:clamp(52px,12vw,86px);
-  margin-top:26px;
-}
-.band::before{
-  content:"";
-  position:absolute;
-  left:0; right:0; top:-21px;
-  height:22px;
-  background-image:radial-gradient(circle at 50% 100%, var(--bandbg) 0 68%, transparent 69%);
-  background-size:46px 22px;
-  background-repeat:repeat-x;
-}
-.band-deck{
-  --bandbg:#FFF3DE;
-  --ink:#0A3446;
-  --muted:#57798A;
-  --accent:#E0562F;
-  --rule:1px solid rgba(10,52,70,.15);
-}
-.band-tile{
-  --bandbg:#5FD9DC;
-  --ink:#04303F;
-  --muted:#0B5568;
-  --accent:#0A4A5C;
-  --rule:1px solid rgba(4,48,63,.2);
-}
-.band-deep{
-  --bandbg:#052836;
-  --ink:#F0FAFA;
-  --muted:#8FB6C4;
-  --accent:#FFC048;
-  --rule:1px solid rgba(79,227,232,.18);
-}
-.band-sun{
-  --bandbg:#FFC94A;
-  --ink:#3A2400;
-  --muted:#6B4A08;
-  --accent:#8A3B00;
-  --rule:1px solid rgba(58,36,0,.2);
-}
-.band .lane p strong{color:var(--ink)}
-.band .col h3{color:var(--accent)}
-/* bullets become pool rings rather than filled dots */
-.band .col li::before{
-  background:transparent;
-  border:2.5px solid currentColor;
-  width:11px; height:11px;
-  top:18px;
-  opacity:.42;
-}
-/* inside the yellow band the callout box is redundant */
-.band-sun .gate{
-  margin:0;
-  padding:0;
-  border:0;
-  background:transparent;
-}
-.band-sun .gate h3{color:var(--ink); font-size:clamp(22px,5.6vw,30px)}
-.band-sun .gate p{color:var(--muted)}
-
-/* ---------- MOTION ----------
-   One orchestrated moment: the numeral fills. Everything else is a
-   quiet reveal on scroll. No confetti, no parallax, no canvas. */
-.numeral .fill{
-  transform-box:view-box;
-  transform-origin:0 0;
-  animation:rise 1.9s cubic-bezier(.22,.85,.28,1) .3s both;
-}
-@keyframes rise{
-  from{transform:translateY(118px)}
-  to{transform:translateY(0)}
-}
-
-/* Elements only hide once JS has marked them, so a JS failure
-   can never leave the page blank. */
-.reveal{opacity:0; transform:translateY(16px)}
-.reveal.in{
-  opacity:1;
-  transform:none;
-  transition:opacity .6s ease, transform .6s cubic-bezier(.2,.8,.3,1);
-}
-
-/* ---------- DIRECTIONS ---------- */
-.maplink{
+.btn{
   display:inline-flex;
   align-items:center;
+  justify-content:center;
   gap:8px;
-  margin-top:14px;
-  padding:11px 18px;
-  border:1.5px solid currentColor;
+  min-height:52px;
+  padding:14px 22px;
   border-radius:999px;
-  color:inherit;
+  border:1px solid transparent;
+  cursor:pointer;
   text-decoration:none;
-  font-size:15px;
-  font-weight:700;
-  line-height:1;
-  transition:background .16s ease;
+  font-weight:800;
+  transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
 }
-.maplink:hover{background:rgba(0,0,0,.07)}
-.band-deep .maplink:hover{background:rgba(255,255,255,.1)}
-.maplink svg{width:16px; height:16px; flex:0 0 auto}
+.btn:hover{transform:translateY(-2px)}
+.btn:disabled{opacity:.62;cursor:wait;transform:none}
+.btn-primary{
+  background:var(--yellow);
+  color:#241700;
+  box-shadow:0 8px 0 #8c5600;
+}
+.btn-primary:hover{box-shadow:0 10px 0 #8c5600}
+.btn-ghost{
+  border-color:rgba(247,254,255,.34);
+  background:rgba(255,255,255,.035);
+  color:var(--white);
+}
+.btn-ghost:hover{border-color:var(--cyan);background:rgba(53,220,229,.08)}
+
+.pass{display:none}
+.pass.show{display:block;animation:passIn .45s ease both}
+@keyframes passIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.band{
+  overflow:hidden;
+  display:grid;
+  grid-template-columns:1fr;
+  border-radius:19px;
+  background:linear-gradient(120deg, var(--cyan), #8ef0d6 48%, var(--yellow));
+  color:#032333;
+  box-shadow:0 18px 45px rgba(0,0,0,.24);
+}
+.band-main{padding:24px}
+.band-kicker{
+  margin:0 0 13px;
+  font-family:var(--pixel);
+  font-size:8px;
+  line-height:1.7;
+  opacity:.70;
+}
+.band-name{
+  margin:0 0 4px;
+  font-family:var(--display);
+  font-size:clamp(25px,6vw,34px);
+  font-weight:800;
+  line-height:1.05;
+  overflow-wrap:anywhere;
+}
+.band-sub{margin:0;font-weight:700;overflow-wrap:anywhere}
+.band-meta{margin:16px 0 0;font-family:var(--mono);font-size:12px;opacity:.72}
+.band-stub{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:4px;
+  padding:20px;
+  border-top:2px dashed rgba(3,35,51,.30);
+}
+.band-stub .n{font-family:var(--display);font-size:44px;font-weight:800;line-height:1}
+.band-stub .l{font-family:var(--pixel);font-size:8px;line-height:1.7;text-transform:uppercase;opacity:.72}
+.pass .after{margin:20px 0 0;color:var(--muted)}
 
 .smslink{
-  color:var(--caustic);
+  color:var(--cyan-soft);
   text-decoration:underline;
   text-underline-offset:3px;
-  text-decoration-thickness:1.5px;
-  white-space:nowrap;
 }
+footer{
+  width:min(100% - 34px, 760px);
+  margin:0 auto;
+  padding:32px 0 max(44px, env(safe-area-inset-bottom));
+  border-top:1px solid var(--line);
+  color:var(--muted);
+  font-size:13px;
+}
+footer p{margin:0 0 7px}
+footer .built{font-family:var(--mono);font-size:12px}
 
-@media (prefers-reduced-motion: reduce){
-  *,*::before,*::after{
-    animation-duration:.001ms !important;
-    animation-iteration-count:1 !important;
-    transition-duration:.001ms !important;
-  }
+/* Keep content visible immediately; the page must never look empty if a browser delays IntersectionObserver. */
+.reveal,.reveal.in{opacity:1;transform:none}
+
+@media(min-width:620px){
+  .detail-grid{grid-template-columns:1fr 1fr}
+  .detail-card:nth-child(3){grid-column:1 / -1}
+  .cols{grid-template-columns:1fr 1fr}
+  .band{grid-template-columns:1fr 145px}
+  .band-stub{border-top:0;border-left:2px dashed rgba(3,35,51,.30)}
+}
+@media(max-width:500px){
+  .poster-shell{width:100%}
+  .content{width:min(100% - 28px,760px)}
+  .rsvp-wrap{padding:22px 17px}
+  .btn{width:100%}
+  .pass .btn{width:100%}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
 }
 </style>
 </head>
 <body>
 
-<div class="backdrop" aria-hidden="true"></div>
+<header class="poster-stage" aria-label="Avyan's birthday invitation">
+  <div class="poster-shell">
+    <img
+      src="assets/avyan-birthday-invitation.jpg"
+      width="941"
+      height="1600"
+      alt="Avyan Rana Yadavalli turns 10. A legendary Roblox and Minecraft pool birthday party on Saturday, August 1 at Cumming Aquatic Center."
+      fetchpriority="high">
 
-<!-- ============ HERO ============ -->
-<header class="hero">
-  <div class="wrap">
-    <p class="eyebrow">Sat 1 Aug · Cumming Aquatic Center</p>
-
-    <!-- Signature 1: the numeral is filled with actual water -->
-    <svg class="numeral" viewBox="0 0 300 150" role="img" aria-label="Ten">
-      <defs>
-        <clipPath id="cut">
-          <text x="0" y="128" font-family="Bricolage Grotesque, Avenir Next, system-ui, sans-serif"
-                font-weight="800" font-size="168" letter-spacing="-8">10</text>
-        </clipPath>
-        <linearGradient id="wg" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#4FE3E8"/>
-          <stop offset="1" stop-color="#0C6E86"/>
-        </linearGradient>
-      </defs>
-      <g clip-path="url(#cut)">
-       <g class="fill">
-        <rect x="0" y="40" width="300" height="140" fill="url(#wg)"/>
-        <path fill="#4FE3E8" opacity=".55"
-              d="M0 42 q25 -10 50 0 t50 0 t50 0 t50 0 t50 0 t50 0 v120 H0Z">
-          <animateTransform attributeName="transform" type="translate"
-                            values="-100 0; 0 0" dur="4.5s" repeatCount="indefinite"/>
-        </path>
-        <path fill="#EAF7F8" opacity=".28"
-              d="M0 47 q25 8 50 0 t50 0 t50 0 t50 0 t50 0 t50 0 v120 H0Z">
-          <animateTransform attributeName="transform" type="translate"
-                            values="0 0; -100 0" dur="7s" repeatCount="indefinite"/>
-        </path>
-       </g>
-      </g>
-      <text x="0" y="128" font-family="Bricolage Grotesque, Avenir Next, system-ui, sans-serif"
-            font-weight="800" font-size="168" letter-spacing="-8"
-            fill="none" stroke="#4FE3E8" stroke-width="2" opacity=".45">10</text>
-    </svg>
-
-    <h1>Avyan Rana Yadavalli hits <em>double digits</em>.</h1>
-    <p class="lede">Lazy river, a 150-foot slide, lunch and cake. Bring your kid, bring your swimsuit, we'll cover the rest.</p>
-
-    <div class="actions">
-      <a class="btn btn-primary" href="#rsvp">RSVP</a>
-      <button class="btn btn-ghost" id="ics" type="button">Add to calendar</button>
-    </div>
+    <a class="poster-action poster-rsvp" href="#rsvp" aria-label="RSVP for Avyan's birthday party">
+      <span class="sr-only">RSVP</span>
+    </a>
+    <button class="poster-action poster-calendar" id="ics" type="button" aria-label="Add Avyan's birthday party to your calendar">
+      <span class="sr-only">Add to calendar</span>
+    </button>
   </div>
 </header>
 
-<!-- ============ LANES ============ -->
-<section class="lanes band band-deck">
-  <div class="wrap">
+<div class="scroll-cue">
+  <a href="#details">Tap the buttons on the invitation · scroll for full details ↓</a>
+</div>
 
-    <div class="lane">
-      <div class="lane-no">When</div>
-      <div>
+<main class="content">
+  <section class="section lanes" id="details">
+    <p class="section-kicker">Party details</p>
+    <h1 class="section-title">Everything you need for <em>Level 10</em>.</h1>
+
+    <div class="detail-grid">
+      <article class="detail-card lane">
+        <p class="detail-label lane-no">When</p>
         <h2>Saturday, August 1</h2>
-        <p><strong>10:00 AM – 2:00 PM.</strong> Come at 10 if you can — the slide line is short in the first hour.</p>
-      </div>
-    </div>
+        <p><strong>10:00 AM–2:00 PM.</strong> Come at 10 if you can—the slide line is shortest during the first hour.</p>
+      </article>
 
-    <div class="lane">
-      <div class="lane-no">Where</div>
-      <div>
+      <article class="detail-card lane">
+        <p class="detail-label lane-no">Where</p>
         <h2>Cumming Aquatic Center</h2>
-        <p><strong>201 Aquatic Circle, Cumming, GA 30040.</strong> Check in at the Outdoor Leisure Pool ticket booth and say you're with the Yadavalli party — then look for our cabana.</p>
+        <p><strong>201 Aquatic Circle, Cumming, GA 30040.</strong> Check in at the Outdoor Leisure Pool ticket booth and say you are with the Yadavalli party.</p>
         <a class="maplink" href="https://www.google.com/maps/dir/?api=1&amp;destination=Cumming+Aquatic+Center%2C+201+Aquatic+Circle%2C+Cumming%2C+GA+30040" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
-               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.6"/>
-          </svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.6"/></svg>
           Get directions
         </a>
-      </div>
-    </div>
+      </article>
 
-    <div class="lane">
-      <div class="lane-no">Who</div>
-      <div>
+      <article class="detail-card lane">
+        <p class="detail-label lane-no">Who</p>
         <h2>Your kids, plus one parent</h2>
-        <p>Bringing a brother or sister is fine — just add each of their names on the RSVP so they're on the gate list. A parent needs to stay for the whole party; <strong>this isn't a drop-off</strong>. Pool rules put an adult in a swimsuit poolside for ages 8 to 13, and <strong>in the water</strong> for anyone 7 or under, so plan accordingly if you're bringing a little one.</p>
+        <p>Brothers or sisters are welcome—add every child's full name to the RSVP. A parent must stay for the whole party; <strong>this is not a drop-off event</strong>. Pool rules require an adult in a swimsuit poolside for ages 8–13 and in the water for anyone 7 or younger.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <p class="section-kicker">Pool-party loadout</p>
+    <div class="cols">
+      <div class="col">
+        <h3>We've got</h3>
+        <ul>
+          <li>Admission for your child and you</li>
+          <li>Lunch at the cabana</li>
+          <li>Birthday cake</li>
+          <li>Shade and bag space</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>You bring</h3>
+        <ul>
+          <li>Swimsuits for child and parent</li>
+          <li>One towel each</li>
+          <li>Sunscreen</li>
+          <li>A dry change of clothes</li>
+        </ul>
       </div>
     </div>
+  </section>
 
-  </div>
-</section>
-
-<!-- ============ COVERED / BRING ============ -->
-<section class="band band-tile">
-  <div class="wrap cols">
-    <div class="col">
-      <h3>We've got</h3>
-      <ul>
-        <li>Admission for your child <em>and</em> for you</li>
-        <li>Lunch at the cabana</li>
-        <li>Cake, obviously</li>
-        <li>Shade and a place to park your bag</li>
-      </ul>
+  <section class="section">
+    <div class="gate">
+      <h3>Every guest must be on the list</h3>
+      <p>The Aquatic Center uses a guest list submitted in advance and will not admit anyone who is missing from it. Enter full names in the RSVP form. Riders must also be at least 48 inches tall for the big slide, with no exceptions.</p>
     </div>
-    <div class="col">
-      <h3>You bring</h3>
-      <ul>
-        <li>Swimsuit — kid and parent</li>
-        <li>Towel each</li>
-        <li>Sunscreen</li>
-        <li>A dry change of clothes</li>
-      </ul>
-    </div>
-  </div>
-</section>
+  </section>
 
-<!-- ============ GATE RULE ============ -->
-<section class="band band-sun">
-<div class="wrap">
-  <div class="gate">
-    <h3>Your names have to be on the list</h3>
-    <p>The Aquatic Center gates entry by a guest list we submit in advance, and they won't admit anyone who isn't on it. That's why the form below asks for full names rather than just a headcount. One more thing worth knowing before Saturday: riders must be 48 inches tall for the big slide, no exceptions.</p>
-  </div>
-</div>
-</section>
+  <section class="section rsvp" id="rsvp">
+    <div class="rsvp-wrap">
+      <h2>RSVP</h2>
+      <p class="deadline" id="deadline">Closes Tuesday, July 28</p>
 
-<!-- ============ RSVP ============ -->
-<section class="rsvp band band-deep" id="rsvp">
-  <div class="wrap">
-    <h2>RSVP</h2>
-    <p class="deadline" id="deadline">Closes Tuesday, July 28</p>
+      <form id="form" novalidate>
+        <div class="field" id="f-child">
+          <label for="child">Children's full names</label>
+          <div id="kids">
+            <div class="kidrow">
+              <input id="child" name="child" type="text" autocomplete="off" placeholder="First and last name">
+            </div>
+          </div>
+          <button type="button" class="addkid" id="addkid">+ Add another child</button>
+          <p class="hint" id="kidhint">Add a brother or sister here if they are coming. Up to 3 children.</p>
+          <p class="err">Every child needs a first and last name—that is what the Aquatic Center checks at the gate.</p>
+        </div>
 
-    <form id="form" novalidate>
-      <div class="field" id="f-child">
-        <label for="child">Children's full names</label>
-        <div id="kids">
-          <div class="kidrow">
-            <input id="child" name="child" type="text" autocomplete="off" placeholder="First and last">
+        <div class="field" id="f-parent">
+          <label for="parent">Escorting parent's full name</label>
+          <input id="parent" name="parent" type="text" autocomplete="name" placeholder="First and last name">
+          <p class="err">Add the adult who will stay. The adult must also be on the list.</p>
+        </div>
+
+        <div class="field" id="f-attending">
+          <label for="attending">Can you make it?</label>
+          <select id="attending" name="attending">
+            <option value="">Pick one</option>
+            <option value="yes">Yes, we'll be there</option>
+            <option value="no">Sorry, we can't</option>
+          </select>
+          <p class="err">Let us know either way so we can close the list.</p>
+        </div>
+
+        <div class="field" id="f-email">
+          <label for="email">Your email</label>
+          <input id="email" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" placeholder="you@example.com">
+          <p class="hint" id="emailhint">So we can reach you about Saturday.</p>
+          <p class="err">That does not look like a working email. Check it and try again.</p>
+        </div>
+
+        <div class="field">
+          <label for="phone">Mobile number</label>
+          <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="Optional—in case we need you Saturday">
+        </div>
+
+        <div class="field">
+          <label for="notes">Allergies or anything we should know</label>
+          <textarea id="notes" name="notes" placeholder="Optional"></textarea>
+        </div>
+
+        <button class="btn btn-primary" type="submit" id="submit">Send my RSVP</button>
+        <p class="formnote" id="formnote">Your names go to Rana and onto the Aquatic Center's entry list for Saturday. Nowhere else.</p>
+      </form>
+
+      <div class="pass" id="pass" aria-live="polite">
+        <div class="band">
+          <div class="band-main">
+            <p class="band-kicker">Guest list · Cumming Aquatic Center</p>
+            <p class="band-name" id="pass-child">—</p>
+            <p class="band-sub" id="pass-parent">—</p>
+            <p class="band-meta" id="pass-meta">—</p>
+          </div>
+          <div class="band-stub">
+            <span class="l">Aug</span>
+            <span class="n">01</span>
+            <span class="l">10–2</span>
           </div>
         </div>
-        <button type="button" class="addkid" id="addkid">+ Add another child</button>
-        <p class="hint" id="kidhint">Add a brother or sister here if they're coming. Up to 3 children.</p>
-        <p class="err">Every child needs a first and last name — that's what the Aquatic Center checks at the gate.</p>
-      </div>
-
-      <div class="field" id="f-parent">
-        <label for="parent">Escorting parent's full name</label>
-        <input id="parent" name="parent" type="text" autocomplete="name" placeholder="First and last">
-        <p class="err">Add the adult who'll be staying — they need to be on the list too.</p>
-      </div>
-
-      <div class="field" id="f-attending">
-        <label for="attending">Can you make it?</label>
-        <select id="attending" name="attending">
-          <option value="">Pick one</option>
-          <option value="yes">Yes, we'll be there</option>
-          <option value="no">Sorry, we can't</option>
-        </select>
-        <p class="err">Let us know either way so we can close the list.</p>
-      </div>
-
-      <div class="field" id="f-email">
-        <label for="email">Your email</label>
-        <input id="email" name="email" type="email" inputmode="email" autocomplete="email"
-               autocapitalize="off" spellcheck="false" placeholder="you@example.com">
-        <p class="hint" id="emailhint">So we can reach you about Saturday.</p>
-        <p class="err">That doesn't look like a working email — check it and try again.</p>
-      </div>
-
-      <div class="field">
-        <label for="phone">Mobile number</label>
-        <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel"
-               placeholder="Optional — in case we need you on Saturday">
-      </div>
-
-      <div class="field">
-        <label for="notes">Allergies or anything we should know</label>
-        <textarea id="notes" name="notes" placeholder="Optional"></textarea>
-      </div>
-
-      <button class="btn btn-primary" type="submit" id="submit">Send my RSVP</button>
-      <p class="formnote" id="formnote">Your names go to Rana and onto the Aquatic Center's entry list for Saturday. Nowhere else.</p>
-    </form>
-
-    <!-- Signature 2: the confirmation prints an admission wristband -->
-    <div class="pass" id="pass" aria-live="polite">
-      <div class="band">
-        <div class="band-main">
-          <p class="band-kicker">Guest list · Cumming Aquatic Center</p>
-          <p class="band-name" id="pass-child">—</p>
-          <p class="band-sub" id="pass-parent">—</p>
-          <p class="band-meta" id="pass-meta">—</p>
+        <p class="after" id="pass-after">You're on the list.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:16px">
+          <button class="btn btn-ghost" type="button" id="ics2">Add Saturday to your calendar</button>
+          <a class="btn btn-ghost" href="https://www.google.com/maps/dir/?api=1&amp;destination=Cumming+Aquatic+Center%2C+201+Aquatic+Circle%2C+Cumming%2C+GA+30040" target="_blank" rel="noopener">Get directions</a>
         </div>
-        <div class="band-stub">
-          <span class="l">Aug</span>
-          <span class="n">01</span>
-          <span class="l">10–2</span>
-        </div>
-      </div>
-      <p class="after" id="pass-after">You're on the list.</p>
-      <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:16px">
-        <button class="btn btn-ghost" type="button" id="ics2">Add Saturday to your calendar</button>
-        <a class="btn btn-ghost" href="https://www.google.com/maps/dir/?api=1&amp;destination=Cumming+Aquatic+Center%2C+201+Aquatic+Circle%2C+Cumming%2C+GA+30040" target="_blank" rel="noopener">Get directions</a>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+</main>
 
 <footer>
-  <div class="wrap">
-    <p id="count">—</p>
-    <p>Questions? <a class="smslink" id="smsmain" href="#">Text Rana</a></p>
-    <p class="built">Built by Rana · <a href="https://maharanay22.github.io">maharanay22.github.io</a></p>
-  </div>
+  <p id="count">—</p>
+  <p>Questions? <a class="smslink" id="smsmain" href="#">Text Rana</a></p>
+  <p class="built">Built by Rana · <a href="https://maharanay22.github.io">maharanay22.github.io</a></p>
 </footer>
 
 <script>
@@ -1009,6 +896,8 @@ form.addEventListener("submit", async (e) => {
           admits:     data.children.length + 1,
           host_email: CONFIG.emailjs.notifyTo
         };
+        // REST, not the SDK. Ad blockers commonly block the jsdelivr script,
+        // which failed silently for every guest running one.
         const send = (tpl, extra) =>
           fetch("https://api.emailjs.com/api/v1.0/email/send", {
             method:"POST",
@@ -1077,5 +966,6 @@ if (!matchMedia("(prefers-reduced-motion: reduce)").matches && "IntersectionObse
   targets.forEach(el => io.observe(el));
 }
 </script>
+
 </body>
 </html>
