@@ -1010,7 +1010,9 @@ form.addEventListener("submit", async (e) => {
           host_email: CONFIG.emailjs.notifyTo
         };
         const send = (tpl, extra) =>
-          emailjs.send(CONFIG.emailjs.serviceId, tpl, {...vars, ...extra}).catch(()=>{});
+          emailjs.send(CONFIG.emailjs.serviceId, tpl, {...vars, ...extra})
+            .then(r  => console.log("EmailJS OK:", tpl, r.status, r.text))
+            .catch(e => console.error("EmailJS FAILED:", tpl, e && e.status, e && (e.text || e.message || e)));
 
         // Only confirm to people who are actually coming.
         if (data.attending === "yes") send(CONFIG.emailjs.confirmTemplateId);
@@ -1066,7 +1068,10 @@ if (!matchMedia("(prefers-reduced-motion: reduce)").matches && "IntersectionObse
 <script>
 /* EmailJS loads only if you switched it on. Off by default, so the page
    ships zero third-party requests and guests on cellular get it instantly. */
-if (CONFIG.emailjs.enabled){
+if (CONFIG.emailjs.enabled && !window.emailjs){
+        console.error("EmailJS: SDK not loaded. Was enabled:true when the page loaded?");
+      }
+      if (CONFIG.emailjs.enabled && window.emailjs){
   const s = document.createElement("script");
   s.src = "https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js";
   s.async = true;
