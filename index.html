@@ -1010,9 +1010,22 @@ form.addEventListener("submit", async (e) => {
           host_email: CONFIG.emailjs.notifyTo
         };
         const send = (tpl, extra) =>
-          emailjs.send(CONFIG.emailjs.serviceId, tpl, {...vars, ...extra})
-            .then(r  => console.log("EmailJS OK:", tpl, r.status, r.text))
-            .catch(e => console.error("EmailJS FAILED:", tpl, e && e.status, e && (e.text || e.message || e)));
+          fetch("https://api.emailjs.com/api/v1.0/email/send", {
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body: JSON.stringify({
+              service_id:  CONFIG.emailjs.serviceId,
+              template_id: tpl,
+              user_id:     CONFIG.emailjs.publicKey,
+              template_params: {...vars, ...extra}
+            })
+          })
+          .then(async r => {
+            const body = await r.text();
+            if (r.ok) console.log("EmailJS OK:", tpl, r.status, body);
+            else console.error("EmailJS FAILED:", tpl, r.status, body);
+          })
+          .catch(e => console.error("EmailJS NETWORK ERROR:", tpl, e.message));
 
         // Only confirm to people who are actually coming.
         if (data.attending === "yes") send(CONFIG.emailjs.confirmTemplateId);
@@ -1064,21 +1077,5 @@ if (!matchMedia("(prefers-reduced-motion: reduce)").matches && "IntersectionObse
   targets.forEach(el => io.observe(el));
 }
 </script>
-
-<script>
-/* EmailJS loads only if you switched it on. Off by default, so the page
-   ships zero third-party requests and guests on cellular get it instantly. */
-if (CONFIG.emailjs.enabled && !window.emailjs){
-        console.error("EmailJS: SDK not loaded. Was enabled:true when the page loaded?");
-      }
-      if (CONFIG.emailjs.enabled && window.emailjs){
-  const s = document.createElement("script");
-  s.src = "https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js";
-  s.async = true;
-  s.onload = () => emailjs.init({publicKey: CONFIG.emailjs.publicKey});
-  document.head.appendChild(s);
-}
-</script>
-
 </body>
 </html>
