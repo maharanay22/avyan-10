@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RSVPs — Avyan's 10th</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#052836">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Public+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --abyss:#052836; --caustic:#4FE3E8; --sun:#FFC048; --foam:#F0FAFA;
+  --muted:#8FB6C4; --bad:#FF7A66; --good:#7BD13F;
+  --display:'Bricolage Grotesque','Avenir Next',system-ui,sans-serif;
+  --body:'Public Sans',-apple-system,system-ui,sans-serif;
+  --mono:'DM Mono',ui-monospace,Menlo,monospace;
+  --rule:1px solid rgba(79,227,232,.18);
+}
+*{box-sizing:border-box}
+html{background:#052836; color-scheme:dark}
+body{
+  margin:0; background:#052836; color:var(--foam);
+  font-family:var(--body); font-size:16px; line-height:1.5;
+}
+.wrap{max-width:1040px; margin:0 auto; padding:clamp(24px,5vw,48px)}
+h1{font-family:var(--display); font-weight:800; font-size:clamp(26px,6vw,40px);
+   letter-spacing:-.02em; margin:0 0 4px}
+.sub{font-family:var(--mono); font-size:12px; letter-spacing:.14em;
+     text-transform:uppercase; color:var(--caustic); margin:0 0 32px}
+
+/* ---------- login ---------- */
+.card{
+  border:var(--rule); border-radius:16px; padding:clamp(22px,4vw,32px);
+  background:rgba(255,255,255,.04); max-width:420px;
+}
+label{display:block; font-family:var(--mono); font-size:11px; letter-spacing:.14em;
+      text-transform:uppercase; color:var(--muted); margin:0 0 7px}
+input{
+  width:100%; font-family:var(--body); font-size:16px; color:var(--foam);
+  background:rgba(255,255,255,.05); border:1px solid rgba(79,227,232,.26);
+  border-radius:11px; padding:13px 14px; margin-bottom:16px;
+}
+input:focus{outline:none; border-color:var(--caustic); background:rgba(255,255,255,.09)}
+button{
+  font-family:var(--body); font-weight:700; font-size:15px; cursor:pointer;
+  padding:13px 22px; border-radius:999px; border:1px solid transparent;
+  background:var(--sun); color:#2A1A00;
+}
+button.ghost{background:transparent; color:var(--foam); border-color:rgba(240,250,250,.3)}
+button:disabled{opacity:.5; cursor:default}
+.msg{color:var(--bad); font-size:14px; margin:10px 0 0; min-height:20px}
+
+/* ---------- stats ---------- */
+.stats{display:grid; gap:14px; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); margin-bottom:14px}
+.stat{border:var(--rule); border-radius:14px; padding:18px 20px; background:rgba(255,255,255,.04)}
+.stat .n{font-family:var(--display); font-weight:800; font-size:38px; line-height:1; letter-spacing:-.02em}
+.stat .l{font-family:var(--mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase;
+         color:var(--muted); margin-top:8px}
+.stat.warn{border-color:var(--bad)} .stat.warn .n{color:var(--bad)}
+.stat.ok .n{color:var(--good)}
+.capnote{font-size:14px; color:var(--muted); margin:0 0 28px}
+.capnote strong{color:var(--sun)}
+
+/* ---------- table ---------- */
+.toolbar{display:flex; flex-wrap:wrap; gap:10px; margin-bottom:18px}
+.tablewrap{overflow-x:auto; border:var(--rule); border-radius:14px}
+table{width:100%; border-collapse:collapse; font-size:14.5px; min-width:720px}
+th{
+  font-family:var(--mono); font-size:10px; letter-spacing:.13em; text-transform:uppercase;
+  color:var(--muted); text-align:left; padding:14px 16px; border-bottom:var(--rule); white-space:nowrap;
+}
+td{padding:14px 16px; border-bottom:1px solid rgba(79,227,232,.09); vertical-align:top}
+tr:last-child td{border-bottom:0}
+.kids{font-weight:700}
+.pill{
+  display:inline-block; font-family:var(--mono); font-size:10px; letter-spacing:.1em;
+  text-transform:uppercase; padding:4px 9px; border-radius:999px; white-space:nowrap;
+}
+.yes{background:rgba(123,209,63,.18); color:#B4EE7E; border:1px solid rgba(123,209,63,.5)}
+.no{background:rgba(255,122,102,.15); color:#FFB0A2; border:1px solid rgba(255,122,102,.45)}
+.note{color:var(--sun); font-size:13.5px}
+.dim{color:var(--muted); font-size:13.5px}
+.mono{font-family:var(--mono); font-size:12.5px; color:var(--muted)}
+.empty{padding:40px 20px; text-align:center; color:var(--muted)}
+
+/* ---------- export panel ---------- */
+.exportbox{
+  margin-top:26px; border:var(--rule); border-radius:14px;
+  background:rgba(255,255,255,.04); padding:clamp(18px,4vw,26px);
+}
+.exportbox h2{font-family:var(--display); font-size:20px; margin:0 0 6px}
+.exportbox p{color:var(--muted); font-size:14px; margin:0 0 16px}
+textarea{
+  width:100%; min-height:200px; font-family:var(--mono); font-size:12.5px; line-height:1.6;
+  color:var(--foam); background:rgba(0,0,0,.28); border:1px solid rgba(79,227,232,.22);
+  border-radius:11px; padding:14px;
+}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>RSVPs</h1>
+  <p class="sub">Avyan's 10th · Sat 1 Aug · Cumming Aquatic Center</p>
+
+  <!-- ---------- LOGIN ---------- -->
+  <div id="login" class="card">
+    <label for="email">Email</label>
+    <input id="email" type="email" autocomplete="username" placeholder="you@example.com">
+    <label for="pw">Password</label>
+    <input id="pw" type="password" autocomplete="current-password" placeholder="••••••••">
+    <button id="signin">Sign in</button>
+    <p class="msg" id="msg"></p>
+  </div>
+
+  <!-- ---------- DASHBOARD ---------- -->
+  <div id="dash" class="hidden">
+
+    <div class="stats" id="stats"></div>
+    <p class="capnote">The cabana caps at <strong>39 guests</strong>. Every family counts as their children plus one adult.</p>
+
+    <div class="toolbar">
+      <button class="ghost" id="refresh">Refresh</button>
+      <button class="ghost" id="csv">Download CSV</button>
+      <button class="ghost" id="signout">Sign out</button>
+    </div>
+
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Children</th><th>Parent</th><th>Coming</th>
+            <th>Email</th><th>Phone</th><th>Notes</th><th>Received</th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+
+    <div class="exportbox">
+      <h2>Guest list for the Aquatic Center</h2>
+      <p>Email this to cac2@cityofcumming.net by Friday July 31 — 24 hours before the party. Only "yes" replies are included.</p>
+      <textarea id="guestlist" readonly></textarea>
+      <div class="toolbar" style="margin:14px 0 0">
+        <button id="copy">Copy to clipboard</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   Same project as the invite. The API key is public by design —
+   Firestore rules are the security boundary, and they require a
+   signed-in admin UID before any read is allowed.
+   ============================================================ */
+const PROJECT = "avyan10";
+const APIKEY  = "AIzaSyAbBe6fn9oF4Y5F8e5WiSmscFA4iL-xxKU";
+const COLL    = "rsvps";
+const CAP     = 39;
+
+let token = null;
+let rows   = [];
+
+const $ = id => document.getElementById(id);
+
+/* ---------- sign in ---------- */
+$("signin").addEventListener("click", signIn);
+$("pw").addEventListener("keydown", e => { if (e.key === "Enter") signIn(); });
+
+async function signIn(){
+  const msg = $("msg");
+  msg.textContent = "";
+  $("signin").disabled = true;
+  try{
+    const r = await fetch(
+      "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" + APIKEY,
+      {method:"POST", headers:{"Content-Type":"application/json"},
+       body: JSON.stringify({email:$("email").value.trim(), password:$("pw").value, returnSecureToken:true})}
+    );
+    const d = await r.json();
+    if (!r.ok) throw new Error(d.error?.message || "Sign-in failed");
+    token = d.idToken;
+    $("login").classList.add("hidden");
+    $("dash").classList.remove("hidden");
+    await load();
+  }catch(e){
+    msg.textContent = friendly(e.message);
+  }finally{
+    $("signin").disabled = false;
+  }
+}
+
+function friendly(code){
+  if (/INVALID_LOGIN|INVALID_PASSWORD|EMAIL_NOT_FOUND/.test(code)) return "Wrong email or password.";
+  if (/TOO_MANY_ATTEMPTS/.test(code)) return "Too many tries — wait a few minutes.";
+  if (/OPERATION_NOT_ALLOWED/.test(code)) return "Email/password sign-in isn't switched on in Firebase yet.";
+  return code;
+}
+
+$("signout").addEventListener("click", () => location.reload());
+$("refresh").addEventListener("click", load);
+
+/* ---------- read the collection ---------- */
+async function load(){
+  const url = `https://firestore.googleapis.com/v1/projects/${PROJECT}`
+            + `/databases/(default)/documents/${COLL}?pageSize=300`;
+  const r = await fetch(url, {headers:{Authorization:"Bearer " + token}});
+  const d = await r.json();
+  if (!r.ok){
+    $("rows").innerHTML = `<tr><td colspan="7" class="empty">Couldn't read: ${d.error?.message || r.status}
+      — check the Firestore rules allow read for your account.</td></tr>`;
+    return;
+  }
+  rows = (d.documents || []).map(doc => {
+    const f = doc.fields || {};
+    return {
+      children:  (f.children?.arrayValue?.values || []).map(v => v.stringValue),
+      parent:    f.parent?.stringValue || "",
+      attending: f.attending?.stringValue || "",
+      email:     f.email?.stringValue || "",
+      phone:     f.phone?.stringValue || "",
+      notes:     f.notes?.stringValue || "",
+      serial:    f.serial?.stringValue || "",
+      at:        f.receivedAt?.timestampValue || ""
+    };
+  }).sort((a,b) => (b.at || "").localeCompare(a.at || ""));
+  render();
+}
+
+/* ---------- render ---------- */
+function render(){
+  const yes = rows.filter(r => r.attending === "yes");
+  const kids = yes.reduce((n,r) => n + r.children.length, 0);
+  const bodies = kids + yes.length;              // children + one adult per family
+  const over = bodies > CAP;
+
+  $("stats").innerHTML = `
+    <div class="stat"><div class="n">${yes.length}</div><div class="l">Families coming</div></div>
+    <div class="stat"><div class="n">${kids}</div><div class="l">Children</div></div>
+    <div class="stat ${over ? "warn" : "ok"}"><div class="n">${bodies}</div><div class="l">Total guests / ${CAP}</div></div>
+    <div class="stat"><div class="n">${rows.length - yes.length}</div><div class="l">Can't make it</div></div>`;
+
+  $("rows").innerHTML = rows.length ? rows.map(r => `
+    <tr>
+      <td class="kids">${esc(r.children.join("<br>"))}</td>
+      <td>${esc(r.parent)}</td>
+      <td><span class="pill ${r.attending === "yes" ? "yes" : "no"}">${r.attending === "yes" ? "Yes" : "No"}</span></td>
+      <td class="dim">${esc(r.email)}</td>
+      <td class="dim">${esc(r.phone) || "—"}</td>
+      <td class="${r.notes ? "note" : "dim"}">${esc(r.notes) || "—"}</td>
+      <td class="mono">${fmt(r.at)}</td>
+    </tr>`).join("")
+    : `<tr><td colspan="7" class="empty">No RSVPs yet.</td></tr>`;
+
+  buildGuestList(yes, kids, bodies);
+}
+
+function esc(s){
+  return String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))
+                  .replace(/&lt;br&gt;/g, "<br>");
+}
+function fmt(iso){
+  if (!iso) return "—";
+  const d = new Date(iso);
+  return d.toLocaleDateString(undefined,{month:"short",day:"numeric"}) + " " +
+         d.toLocaleTimeString(undefined,{hour:"numeric",minute:"2-digit"});
+}
+
+/* ---------- the thing you actually email the venue ---------- */
+function buildGuestList(yes, kids, bodies){
+  const lines = [];
+  lines.push("Yadavalli birthday party — guest list");
+  lines.push("Saturday 1 August 2026, 10:00 AM – 2:00 PM");
+  lines.push("");
+  lines.push(`${yes.length} families · ${kids} children · ${bodies} total guests`);
+  lines.push("Host is paying admission for all invited children and one escorting parent each.");
+  lines.push("");
+  let n = 1;
+  yes.forEach(r => {
+    r.children.forEach(c => lines.push(`${n++}. ${c} (child)`));
+    lines.push(`${n++}. ${r.parent} (parent)`);
+  });
+  const allergies = yes.filter(r => r.notes.trim());
+  if (allergies.length){
+    lines.push("");
+    lines.push("Notes / allergies:");
+    allergies.forEach(r => lines.push(`- ${r.children.join(", ")}: ${r.notes}`));
+  }
+  $("guestlist").value = lines.join("\n");
+}
+
+$("copy").addEventListener("click", async () => {
+  try{
+    await navigator.clipboard.writeText($("guestlist").value);
+    $("copy").textContent = "Copied";
+    setTimeout(() => $("copy").textContent = "Copy to clipboard", 1600);
+  }catch{
+    $("guestlist").select();
+  }
+});
+
+/* ---------- CSV ---------- */
+$("csv").addEventListener("click", () => {
+  const head = ["Children","Parent","Attending","Email","Phone","Notes","Serial","Received"];
+  const q = v => `"${String(v).replace(/"/g,'""')}"`;
+  const csv = [head.map(q).join(",")].concat(
+    rows.map(r => [r.children.join("; "), r.parent, r.attending, r.email, r.phone, r.notes, r.serial, r.at].map(q).join(","))
+  ).join("\r\n");
+  const url = URL.createObjectURL(new Blob([csv], {type:"text/csv"}));
+  const a = document.createElement("a");
+  a.href = url; a.download = "avyan-rsvps.csv"; a.click();
+  URL.revokeObjectURL(url);
+});
+</script>
+</body>
+</html>
